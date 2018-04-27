@@ -1,0 +1,53 @@
+.form-group .form-plugin {
+    margin-bottom: 5px;
+}
+
+.form-group .form-plugin.inline {
+    border: 1px dashed #dfdfdf;
+    padding: 2px 5px;
+}
+
+.form-group .form-plugin.intable {
+    border: 1px dashed #dfdfdf;
+    padding: 2px 5px 5px 2px;
+    background: #fafcfd;
+}
+
+.form-group .form-plugin.intable .form-group {
+    background: #fafcfd;
+}
+
+.plugin-item {
+    padding: 2px 0px;
+    border-bottom: 1px dashed #dfdfdf;
+}
+
+.form-group .plugin-item .form-inline:first-child {
+    margin-left: 0px;
+}
+
+.form-plugin .form-group .form-label {
+    text-align: right;
+    width: 100px;
+}
+
+.form-plugin .form-group .form-box {
+    padding-left: 15px;
+}
+
+.form-group .form-plugin.simple {
+    padding: 0;
+}
+
+.form-group .form-plugin.simple .form-box {
+    padding-left: 5px;
+}
+
+a.plugin-add i,
+a.plugin-insert i,
+a.plugin-del i,
+a.plugin-upsort i,
+a.plugin-dnsort i {
+    font-size: 14px;
+    margin-right: 3px;
+}
