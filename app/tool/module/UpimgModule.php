@@ -9,9 +9,9 @@
 namespace app\tool\module;
 
 
-use app\tool\libs\MakeForm;
-use beacon\Form;
+use app\tool\libs\MakeInterface;
 use app\tool\libs\ModuleInterface;
+use beacon\Form;
 
 class UpimgModule extends Form implements ModuleInterface
 {
@@ -52,7 +52,7 @@ class UpimgModule extends Form implements ModuleInterface
         ];
     }
 
-    public static function exportField(MakeForm $maker, array &$field, array $extend)
+    public static function exportField(MakeInterface $maker, array &$field, array $extend)
     {
         foreach ($extend as $key => $item) {
             $field[$key] = $item;

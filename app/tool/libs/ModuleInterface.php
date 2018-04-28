@@ -11,5 +11,5 @@ namespace app\tool\libs;
 
 interface ModuleInterface
 {
-    public static function exportField(MakeForm $maker, array &$field, array $extend);
+    public static function exportField(MakeInterface $maker, array &$field, array $extend);
 }

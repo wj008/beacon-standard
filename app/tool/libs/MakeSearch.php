@@ -7,7 +7,7 @@ use beacon\DB;
 use beacon\Route;
 use beacon\Utils;
 
-class MakeSearch
+class MakeSearch implements MakeInterface
 {
     private $lrow = null;
     private $fieldList = null;
@@ -34,7 +34,7 @@ class MakeSearch
         $this->createClass();
     }
 
-    public function addUse($name)
+    public function addUse(string $name)
     {
         $this->use[$name] = $name;
     }

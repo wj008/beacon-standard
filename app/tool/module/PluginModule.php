@@ -9,10 +9,10 @@
 namespace app\tool\module;
 
 
-use app\tool\libs\MakeForm;
-use beacon\Form;
-use beacon\DB;
+use app\tool\libs\MakeInterface;
 use app\tool\libs\ModuleInterface;
+use beacon\DB;
+use beacon\Form;
 
 class PluginModule extends Form implements ModuleInterface
 {
@@ -131,12 +131,7 @@ class PluginModule extends Form implements ModuleInterface
         ];
     }
 
-    /**
-     * @param $maker MakeForm
-     * @param array $field
-     * @param array $extend
-     */
-    public static function exportField(MakeForm $maker, array &$field, array $extend)
+    public static function exportField(MakeInterface $maker, array &$field, array $extend)
     {
         $extend['plugType'] = 0;
         if ($extend['plugMode'] == 'simple') {

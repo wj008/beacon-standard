@@ -10,7 +10,7 @@ namespace app\tool\module;
 
 
 use app\tool\libs\CodeItem;
-use app\tool\libs\MakeForm;
+use app\tool\libs\MakeInterface;
 use app\tool\libs\ModuleInterface;
 use beacon\Form;
 use beacon\Utils;
@@ -133,12 +133,7 @@ class CheckgroupModule extends Form implements ModuleInterface
         ];
     }
 
-    /**
-     * @param $maker \app\tool\libs\MakeForm
-     * @param $field array
-     * @param $extend array
-     */
-    public static function exportField(MakeForm $maker, array &$field, array $extend)
+    public static function exportField(MakeInterface $maker, array &$field, array $extend)
     {
         $field['itemType'] = isset($extend['itemType']) ? $extend['itemType'] : 'string';
         $field['bitComp'] = isset($extend['bitComp']) ? boolval($extend['bitComp']) : false;

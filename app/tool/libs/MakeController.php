@@ -12,7 +12,7 @@ namespace app\tool\libs;
 use beacon\DB;
 use beacon\Utils;
 
-class MakeController
+class MakeController implements MakeInterface
 {
     private $lrow = null;
     private $frow = null;
@@ -33,7 +33,7 @@ class MakeController
         $this->createClass();
     }
 
-    private function addUse($name)
+    public function addUse(string $name)
     {
         $this->use[$name] = $name;
     }

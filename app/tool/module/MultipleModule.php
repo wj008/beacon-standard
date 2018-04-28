@@ -10,11 +10,11 @@ namespace app\tool\module;
 
 
 use app\tool\libs\CodeItem;
-use app\tool\libs\MakeForm;
+use app\tool\libs\MakeInterface;
+use app\tool\libs\ModuleInterface;
 use beacon\Form;
 use beacon\Route;
 use beacon\Utils;
-use app\tool\libs\ModuleInterface;
 
 class MultipleModule extends Form implements ModuleInterface
 {
@@ -57,7 +57,7 @@ class MultipleModule extends Form implements ModuleInterface
         ];
     }
 
-    public static function exportField(MakeForm $maker, array &$field, array $extend)
+    public static function exportField(MakeInterface $maker, array &$field, array $extend)
     {
         if (!empty($field['default']) && Utils::isJsonString($field['default'])) {
             $field['default'] = json_decode($field['default'], 1);

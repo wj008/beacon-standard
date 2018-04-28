@@ -10,11 +10,11 @@ namespace app\tool\module;
 
 
 use app\tool\libs\CodeItem;
-use app\tool\libs\MakeForm;
+use app\tool\libs\MakeInterface;
+use app\tool\libs\ModuleInterface;
 use beacon\Form;
 use beacon\Route;
 use beacon\Utils;
-use app\tool\libs\ModuleInterface;
 
 class SelectDialogModule extends Form implements ModuleInterface
 {
@@ -78,7 +78,7 @@ class SelectDialogModule extends Form implements ModuleInterface
         ];
     }
 
-    public static function exportField(MakeForm $maker, array &$field, array $extend)
+    public static function exportField(MakeInterface $maker, array &$field, array $extend)
     {
         foreach ($extend as $key => $item) {
 

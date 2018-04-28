@@ -10,11 +10,10 @@ namespace app\tool\module;
 
 
 use app\tool\libs\CodeItem;
-use app\tool\libs\MakeForm;
-use beacon\Console;
+use app\tool\libs\MakeInterface;
+use app\tool\libs\ModuleInterface;
 use beacon\Form;
 use beacon\Utils;
-use app\tool\libs\ModuleInterface;
 
 class SelectModule extends Form implements ModuleInterface
 {
@@ -127,12 +126,11 @@ class SelectModule extends Form implements ModuleInterface
      * @param array $field
      * @param array $extend
      */
-    public static function exportField(MakeForm $maker, array &$field, array $extend)
+    public static function exportField(MakeInterface $maker, array &$field, array $extend)
     {
         if (is_string($extend['options']) && Utils::isJsonString($extend['options'])) {
             $extend['options'] = json_decode($extend['options'], true);
         }
-
         if (!empty($extend['headerText']) && (!empty($extend['headerValue']) || $extend['headerValue'] === '0')) {
             $field['header'] = [$extend['headerValue'], $extend['headerText']];
         } elseif (!empty($extend['headerText'])) {

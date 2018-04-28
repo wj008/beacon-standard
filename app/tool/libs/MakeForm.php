@@ -7,7 +7,7 @@ use beacon\DB;
 use beacon\Route;
 use beacon\Utils;
 
-class MakeForm
+class MakeForm implements MakeInterface
 {
     private $frow = null;
     private $fieldList = null;
@@ -35,7 +35,7 @@ class MakeForm
         $this->createClass();
     }
 
-    public function addUse($name)
+    public function addUse(string $name)
     {
         $this->use[$name] = $name;
     }
