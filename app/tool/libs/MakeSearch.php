@@ -46,7 +46,7 @@ class MakeSearch
             $extendAttrs = json_decode($field['extendAttrs'], true);
             if ($field) {
                 $type = $field['type'];
-                $typeClass = Route::getNamespace() . '\\boxtype\\' . Utils::toCamel($type) . 'TypeForm';
+                $typeClass = Route::getNamespace() . '\\module\\' . Utils::toCamel($type) . 'Module';
                 if (class_exists($typeClass) && is_callable($typeClass . '::exportField')) {
                     call_user_func_array($typeClass . '::exportField', [$this, &$field, $extendAttrs]);
                 }
