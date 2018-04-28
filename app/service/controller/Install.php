@@ -127,7 +127,6 @@ class Install extends Controller
   `email` varchar(255) DEFAULT NULL COMMENT \'管理员邮箱\',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
 CREATE TABLE `@pf_sysmenu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL COMMENT \'菜单标题\',
@@ -140,9 +139,7 @@ CREATE TABLE `@pf_sysmenu` (
   `icon` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
 INSERT INTO `@pf_manage` VALUES (\'1\', \'admin\', \'e10adc3949ba59abbe56e057f20f883e\', \'wj008\', \'1\', \'0\', \'1999-01-01\', \'1999-01-01 00:00:00\', \'1999-01-01 00:00:00\', \'127.0.0.1\', \'127.0.0.1\', \'0\', \'\');
-
 INSERT INTO `@pf_sysmenu` VALUES (\'1\', \'首页\', \'1\', \'0\', \'1\', \'\', \'10\', \'\', \'\');
 INSERT INTO `@pf_sysmenu` VALUES (\'2\', \'系统账号管理\', \'1\', \'1\', \'1\', \'\', \'0\', \'\', \'icofont icofont-user-male\');
 INSERT INTO `@pf_sysmenu` VALUES (\'3\', \'管理员管理\', \'1\', \'2\', \'1\', \'~/Manage\', \'12\', null, null);
@@ -151,6 +148,201 @@ INSERT INTO `@pf_sysmenu` VALUES (\'5\', \'网站信息管理\', \'1\', \'1\', \
 INSERT INTO `@pf_sysmenu` VALUES (\'6\', \'系统菜单\', \'1\', \'0\', \'1\', null, \'400\', null, null);
 INSERT INTO `@pf_sysmenu` VALUES (\'7\', \'工具箱\', \'1\', \'6\', \'1\', \'\', \'0\', \'\', \'icofont icofont-tools-alt-2\');
 INSERT INTO `@pf_sysmenu` VALUES (\'8\', \'系统菜单管理\', \'1\', \'7\', \'1\', \'~/Sysmenu\', \'50\', null, null);');
+
+                //安装工具库==============
+                $db->exec('DROP TABLE IF EXISTS `@pf_tool_application`;
+CREATE TABLE `@pf_tool_application` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `namespace` varchar(255) DEFAULT NULL,
+  `module` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for sl_tool_field
+-- ----------------------------
+DROP TABLE IF EXISTS `@pf_tool_field`;
+CREATE TABLE `@pf_tool_field` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `formId` int(11) NOT NULL DEFAULT \'0\' COMMENT \'表单ID\',
+  `name` varchar(255) DEFAULT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  `boxName` text,
+  `type` varchar(255) DEFAULT NULL,
+  `hideBox` tinyint(1) DEFAULT NULL,
+  `dbfield` tinyint(1) DEFAULT NULL,
+  `dbtype` varchar(255) DEFAULT NULL,
+  `dblen` int(11) DEFAULT NULL,
+  `dbpoint` varchar(500) DEFAULT NULL,
+  `dbcomment` varchar(255) DEFAULT NULL,
+  `beforeText` varchar(255) DEFAULT NULL,
+  `afterText` varchar(255) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `viewMerge` int(11) DEFAULT NULL,
+  `close` tinyint(1) DEFAULT NULL,
+  `viewClose` tinyint(1) DEFAULT NULL,
+  `offEdit` tinyint(1) DEFAULT NULL,
+  `default` text,
+  `extendAttrs` text,
+  `customAttrs` text,
+  `dynamic` text,
+  `boxPlaceholder` text,
+  `boxClass` text,
+  `boxStyle` text,
+  `boxAttrs` text,
+  `tips` text,
+  `isEditTips` tinyint(1) DEFAULT NULL,
+  `editTips` text,
+  `viewTplName` varchar(255) DEFAULT NULL,
+  `viewTplCode` text,
+  `viewAsterisk` tinyint(4) DEFAULT NULL,
+  `dataVal` text,
+  `dataValMsg` text,
+  `dataValGroup` text,
+  `isEditDataVal` tinyint(1) DEFAULT NULL,
+  `editDataVal` text,
+  `editDataValMsg` text,
+  `dataValInfo` text,
+  `dataValValid` text,
+  `dataValFor` varchar(255) DEFAULT NULL,
+  `dataValOff` tinyint(1) DEFAULT NULL,
+  `dataValEvents` varchar(255) DEFAULT NULL,
+  `names` text,
+  `viewTabIndex` varchar(255) DEFAULT NULL,
+  `valueFunc` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=639 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for sl_tool_form
+-- ----------------------------
+DROP TABLE IF EXISTS `@pf_tool_form`;
+CREATE TABLE `@pf_tool_form` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `proId` int(11) DEFAULT NULL,
+  `namespace` varchar(255) DEFAULT NULL,
+  `key` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `caption` varchar(255) DEFAULT NULL,
+  `tbName` varchar(255) DEFAULT NULL,
+  `tbEngine` varchar(255) DEFAULT NULL,
+  `tbCreate` tinyint(1) DEFAULT NULL,
+  `updateTime` datetime DEFAULT NULL,
+  `version` int(255) DEFAULT NULL,
+  `extType` int(11) DEFAULT NULL,
+  `extTbname` varchar(255) DEFAULT NULL,
+  `extMode` int(11) DEFAULT NULL,
+  `extFields` text,
+  `useAjax` tinyint(4) DEFAULT NULL,
+  `description` text,
+  `isEditDescription` tinyint(4) DEFAULT NULL,
+  `editDescription` text,
+  `information` text,
+  `attention` text,
+  `script` text,
+  `validateMode` int(11) DEFAULT NULL,
+  `viewUseTab` tinyint(1) DEFAULT NULL,
+  `viewTabs` text,
+  `valueFuncArgs` varchar(255) DEFAULT NULL,
+  `valueFuncSql` text,
+  `valueFuncField` varchar(255) DEFAULT NULL,
+  `viewNotBack` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for sl_tool_list
+-- ----------------------------
+DROP TABLE IF EXISTS `@pf_tool_list`;
+CREATE TABLE `@pf_tool_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `namespace` varchar(255) DEFAULT NULL,
+  `key` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `caption` varchar(255) DEFAULT NULL,
+  `formId` int(11) DEFAULT NULL,
+  `proId` int(11) DEFAULT NULL,
+  `fields` text,
+  `orgFields` text,
+  `listResize` tinyint(1) DEFAULT NULL,
+  `usePageList` tinyint(1) DEFAULT NULL,
+  `pageSize` int(11) DEFAULT NULL,
+  `baseController` varchar(255) DEFAULT NULL,
+  `useCustomTemplate` tinyint(1) DEFAULT NULL,
+  `template` varchar(255) DEFAULT NULL,
+  `templateHack` varchar(255) DEFAULT NULL,
+  `baseLayout` varchar(255) DEFAULT NULL,
+  `tbName` varchar(255) DEFAULT NULL,
+  `tbNameAlias` varchar(255) DEFAULT NULL,
+  `tbJoin` text,
+  `tbField` text,
+  `tbWhere` text,
+  `tbOrder` text,
+  `useSqlTemplate` tinyint(1) DEFAULT NULL,
+  `sqlTemplate` text,
+  `sqlCountTemplate` text,
+  `actions` text,
+  `topBtns` text,
+  `thTitle` varchar(255) DEFAULT NULL,
+  `thFixed` varchar(255) DEFAULT NULL,
+  `thAlign` varchar(255) DEFAULT NULL,
+  `thWidth` varchar(255) DEFAULT NULL,
+  `thAttrs` text,
+  `tdAlign` varchar(255) DEFAULT NULL,
+  `tdAttrs` text,
+  `listBtns` text,
+  `useSelect` tinyint(4) DEFAULT NULL,
+  `selectType` varchar(255) DEFAULT NULL,
+  `selectBtns` text,
+  `headTemplate` text,
+  `buttomTemplate` text,
+  `information` text,
+  `attention` text,
+  `assign` text,
+  `viewTabs` text,
+  `viewUseTab` tinyint(1) DEFAULT NULL,
+  `leftFixed` int(11) DEFAULT NULL,
+  `rightFixed` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for sl_tool_search
+-- ----------------------------
+DROP TABLE IF EXISTS `@pf_tool_search`;
+CREATE TABLE `@pf_tool_search` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `listId` int(11) NOT NULL DEFAULT \'0\' COMMENT \'表单ID\',
+  `name` varchar(255) DEFAULT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `hideBox` tinyint(1) DEFAULT NULL,
+  `beforeText` varchar(255) DEFAULT NULL,
+  `afterText` varchar(255) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `viewMerge` int(11) DEFAULT NULL,
+  `default` text,
+  `extendAttrs` text,
+  `customAttrs` text,
+  `boxPlaceholder` text,
+  `boxClass` text,
+  `boxStyle` text,
+  `boxAttrs` text,
+  `names` text,
+  `viewTabIndex` varchar(255) DEFAULT NULL,
+  `tbWhere` text,
+  `tbWhereType` int(11) DEFAULT NULL,
+  `varType` varchar(255) DEFAULT \'\',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8;
+');
+
+                $db->exec('
+INSERT INTO `@pf_sysmenu` VALUES (\'10\', \'项目管理\', \'1\', \'7\', \'0\', \'^/tool/ToolApplication\', \'1\', \'\', \'\');
+INSERT INTO `@pf_sysmenu` VALUES (\'11\', \'表单模型\', \'1\', \'7\', \'0\', \'^/tool/ToolForm\', \'2\', \'\', \'\');
+INSERT INTO `@pf_sysmenu` VALUES (\'12\', \'列表模型\', \'1\', \'7\', \'0\', \'^/tool/ToolList\', \'3\', \'\', \'\');
+');
 
                 unset($vals['is_create']);
                 $code = '<?php return ' . var_export($vals, TRUE) . ';';
