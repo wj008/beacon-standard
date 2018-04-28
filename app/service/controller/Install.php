@@ -21,7 +21,7 @@ class Install extends Controller
         parent::initialize();
         $file = Utils::path(ROOT_DIR, 'config/db.config.php');
         if (file_exists($file)) {
-            //   exit;
+            exit;
         }
     }
 
