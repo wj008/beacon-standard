@@ -117,7 +117,7 @@ class ToolField extends ToolController
             $vals['formId'] = $this->formId;
             $type = $vals['type'];
             $vals['names'] = [];
-            $typeClass = Route::getNamespace() . '\\boxtype\\' . Utils::toCamel($type) . 'TypeForm';
+            $typeClass = Route::getNamespace() . '\\module\\' . Utils::toCamel($type) . 'Module';
             $xform = Form::instance($typeClass);
             if ($xform != null) {
                 $tvals = $xform->autoComplete();

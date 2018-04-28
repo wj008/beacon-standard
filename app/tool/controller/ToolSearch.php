@@ -98,7 +98,7 @@ class ToolSearch extends ToolController
             $vals['listId'] = $this->listId;
             $type = $vals['type'];
             $vals['names'] = [];
-            $typeClass = Route::getNamespace() . '\\boxtype\\' . Utils::toCamel($type) . 'TypeForm';
+            $typeClass = Route::getNamespace() . '\\module\\' . Utils::toCamel($type) . 'Module';
             $xform = Form::instance($typeClass);
             if ($xform != null) {
                 if ($type == 'linkage') {
@@ -144,7 +144,7 @@ class ToolSearch extends ToolController
             if ($type != 'hidden') {
                 $vals['hideBox'] = false;
             }
-            $typeClass = Route::getNamespace() . '\\boxtype\\' . Utils::toCamel($type) . 'TypeForm';
+            $typeClass = Route::getNamespace() . '\\module\\' . Utils::toCamel($type) . 'Module';
             $xform = Form::instance($typeClass);
             if ($xform != null) {
                 if ($type == 'linkage') {
@@ -237,7 +237,7 @@ class ToolSearch extends ToolController
 
     public function loadPluginAction($id = 0, $type = 'text')
     {
-        $typeClass = Route::getNamespace() . '\\boxtype\\' . Utils::toCamel($type) . 'TypeForm';
+        $typeClass = Route::getNamespace() . '\\module\\' . Utils::toCamel($type) . 'Module';
         $form = Form::instance($typeClass);
         if ($form == null) {
             $this->success('', null);
