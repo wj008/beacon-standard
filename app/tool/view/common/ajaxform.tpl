@@ -1,0 +1,1 @@
+{include file='common/box.tpl'}{call fn=formPanel fields=$form->getViewFields()}

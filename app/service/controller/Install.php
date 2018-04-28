@@ -163,5 +163,4 @@ INSERT INTO `@pf_sysmenu` VALUES (\'8\', \'系统菜单管理\', \'1\', \'7\', \
         }
     }
 
-
 }

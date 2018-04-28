@@ -6,9 +6,11 @@ define('ROOT_DIR', dirname(__DIR__));
 date_default_timezone_set('PRC');
 require(ROOT_DIR . '/vendor/autoload.php');
 
-use beacon\Route;
+//use beacon\Route as Route; //无工具路由
+use libs\zero\Boot as Route; //有工具路由
 
 Route::register('home');
 Route::register('admin');
 Route::register('service');
+Route::register('tool');
 Route::run();
