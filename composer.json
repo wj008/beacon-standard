@@ -13,7 +13,8 @@
     "psr-4": {
       "sdopx\\plugin\\": "sdopx/plugin",
       "beacon\\widget\\": "beacon/widget",
-      "app\\": "app/"
+      "app\\": "app/",
+      "libs\\": "libs/"
     }
   },
   "require": {
