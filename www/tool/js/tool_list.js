@@ -5,11 +5,17 @@ Yee.loader('yee-layer', function () {
         var that = $('#formId');
         var formId = $('#formId').val();
         $.post('/tool/tool_list/get_field', {formId: formId}, function (ret) {
+
             if (ret && ret.status) {
                 cacheFileds = ret.data.options;
                 cacheTbname = ret.data.tbname;
                 $('#tbName').val(cacheTbname);
+                //更新字段列表
                 $('.dbfield').each(function (idx, item) {
+                    $(item).data('options', cacheFileds).triggerHandler('update');
+                });
+                //更新排序列表
+                $('.orderfield').each(function (idx, item) {
                     $(item).data('options', cacheFileds).triggerHandler('update');
                 });
             }
@@ -36,6 +42,7 @@ Yee.loader('yee-layer', function () {
     $('#row_fields').on('addItem', function (ev, item) {
         if (item) {
             item.find('.dbfield').data('options', cacheFileds).triggerHandler('update');
+            item.find('.orderfield').data('options', cacheFileds).triggerHandler('update');
         }
     });
 
