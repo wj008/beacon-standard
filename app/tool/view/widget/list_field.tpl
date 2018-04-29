@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label class="form-label" style="width: 60px">标题：</label>
                     <div class="form-box">
-                        {box field=$form->getField('title')} 排序：{box field=$form->getField('orderName')}
+                        {box field=$form->getField('title')} 排序：{box field=$form->getField('orderName')  class="form-inp select orderfield"}
                     </div>
                 </div>
                 <div class="form-group">

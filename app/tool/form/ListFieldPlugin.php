@@ -26,13 +26,15 @@ class ListFieldPlugin extends Form
                 'label' => '标题',
                 'data-val' => ['r' => true],
                 'data-val-msg' => ['r' => '标识不能为空'],
-                'box-class' => 'form-inp text title',
+                'box-class' => 'form-inp stext title',
+                'box-style' => 'width:145px;',
             ],
             'orderName' => [
                 'label' => '排序',
                 'view-merge' => -1,
-                'box-placeholder' => '排序字段名',
-                'box-style' => 'width:80px;',
+                'type' => 'dynamic_select',
+                'header' => ['', '选择字段'],
+                'box-style' => 'max-width:200px;',
             ],
 
             'thAlign' => [
