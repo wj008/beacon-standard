@@ -209,11 +209,13 @@ class MakeController implements MakeInterface
         $this->addUse('beacon\SqlSelectInterface');
         $this->out[] = '    //为ZeroController所需的条件查询';
         $this->out[] = '    protected function zeroWhere(SqlSelectInterface $selector){ ';
+        $useSearchForm=false;
         if (count($tbWhereTemps) > 0 && !empty($zeroConfig['searchForm'])) {
             $this->addUse('beacon\Form');
             $this->out[] = '          //从搜索表单获取数据';
             $this->out[] = '        $search = Form::instance(' . var_export(trim($zeroConfig['searchForm']), true) . ');';
             $this->out[] = '        $vals = $search->autoComplete(\'param\');';
+            $useSearchForm=true;
         }
         foreach ($tbWhereTemps as $item) {
             if (empty($item['sql'])) {
@@ -234,7 +236,11 @@ class MakeController implements MakeInterface
                     if (preg_match('@^\w+$@', $argname)) {
                         $temp_value = '$' . $argname;
                     }
-                    $this->out[] = '        ' . $temp_value . ' = isset($vals[' . var_export($argname, true) . ']) ? $vals[' . var_export($argname, true) . '] : $this->param(' . var_export($keyname, true) . ');;';
+                    if($useSearchForm) {
+                        $this->out[] = '        ' . $temp_value . ' = isset($vals[' . var_export($argname, true) . ']) ? $vals[' . var_export($argname, true) . '] : $this->param(' . var_export($keyname, true) . ');';
+                    }else{
+                        $this->out[] = '        ' . $temp_value . ' = $this->param(' . var_export($keyname, true) . ');';
+                    }
                     $this->out[] = '        $args[] = is_array(' . $temp_value . ') ? \'\' : ' . $temp_value . ';';
                 }
 
@@ -261,9 +267,13 @@ class MakeController implements MakeInterface
                 if (preg_match('@^\w+$@', $argname)) {
                     $temp_value = '$' . $argname;
                 }
-                $this->out[] = '        ' . $temp_value . '  = isset($vals[' . var_export($argname, true) . ']) ? $vals[' . var_export($argname, true) . '] : $this->param(' . var_export($keyname, true) . ');;';
+                if($useSearchForm) {
+                    $this->out[] = '        ' . $temp_value . '  = isset($vals[' . var_export($argname, true) . ']) ? $vals[' . var_export($argname, true) . '] : $this->param(' . var_export($keyname, true) . ');';
+                }
+                else{
+                    $this->out[] = '        ' . $temp_value . '  =  $this->param(' . var_export($keyname, true) . ');';
+                }
                 $this->out[] = '        ' . $temp_value . '  = is_array(' . $temp_value . ' ) ? \'\' : ' . $temp_value . ' ;';
-
                 if ($item['type'] == -1) {
                     $this->out[] = '        $selector->where(' . var_export($item['sql'], true) . ', ' . $temp_value . ' );';
                 } else {
@@ -513,6 +523,7 @@ class MakeController implements MakeInterface
         $code[] = join("\n", $this->out);
         return join("\n", $code);
     }
+
 
     public function getClassFullName()
     {
