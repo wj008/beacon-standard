@@ -8,8 +8,6 @@
 
 namespace app\admin\controller;
 
-
-use beacon\Console;
 use beacon\DB;
 use beacon\Form;
 
