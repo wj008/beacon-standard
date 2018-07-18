@@ -164,7 +164,7 @@ class MakeSearch implements MakeInterface
                             if (!empty($okey)) {
                                 $code[] = '    $value = ($row == null || !isset($row[' . var_export($okey, true) . '])) ? null : $row[' . var_export($okey, true) . '];';
                             } else {
-                                $code[] = '    $row = $row == null ? [] : array_value($row);';
+                                $code[] = '    $row = $row == null ? [] : array_values($row);';
                                 $code[] = '    $value = isset($row[0]) ? null : $row[0];';
                             }
                             $code[] = '    return $value;';

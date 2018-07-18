@@ -105,24 +105,17 @@ class ToolList extends ToolController
                 $this->error(['proId' => '不存在的项目']);
             }
             $id = $form->insert($vals);
+            //拷贝添加
             if (!empty($copyid)) {
                 $slist = DB::getList('select * from @pf_tool_search where listId=?', $copyid);
                 foreach ($slist as $field) {
-                    $vals = [];
-                    foreach (['name', 'label', 'type', 'hideBox',
-                                 'beforeText', 'afterText', 'viewMerge', 'default',
-                                 'extendAttrs', 'customAttrs', 'boxPlaceholder'
-                                 , 'boxClass'
-                                 , 'boxStyle'
-                                 , 'boxAttrs'
-                                 , 'names'
-                             ] as $key) {
-                        $vals[$key] = $field[$key];
+                    unset($field['id']);
+                    $field['sort'] = intval(DB::getMax('@pf_tool_search', 'sort', 'listId=?', $id)) + 10;
+                    $field['listId'] = $id;
+                    if (empty($field['viewTabIndex'])) {
+                        $field['viewTabIndex'] = 'base';
                     }
-                    $vals['viewTabIndex'] = 'base';
-                    $vals['sort'] = intval(DB::getMax('@pf_tool_search', 'sort', 'listId=?', $id)) + 10;
-                    $vals['listId'] = $id;
-                    DB::insert('@pf_tool_search', $vals);
+                    DB::insert('@pf_tool_search', $field);
                 }
             }
             MakeController::make($id);

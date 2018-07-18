@@ -31,7 +31,7 @@ class ListTopBtnPlugin extends Form
                 'box-class' => 'form-inp select shortcut',
                 'view-merge' => -1,
                 'header' => '快捷设置',
-                'options' => [['<a id="add-btn" href="{@url act=\'add\'@}" class="yee-btn add"><i class="icofont icofont-ui-add"></i>新增</a>', '新增 add']],
+                'options' => [['<a id="add-btn" href="{url act=\'add\'}" class="yee-btn add"><i class="icofont icofont-ui-add"></i>新增</a>', '新增 add']],
             ],
 
         ];

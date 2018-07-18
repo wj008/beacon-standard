@@ -115,9 +115,10 @@ class LinkageModule extends Form implements ModuleInterface
             }
             if ($key == 'dataSource') {
                 if ($item[0] == '~' || $item[0] == '^') {
-                    $item = new CodeItem();
-                    $item->addUse('beacon\Route');
-                    $item->setCode('Route::url(' . var_export($item, true) . ')');
+                    $citem = new CodeItem();
+                    $citem->addUse('beacon\Route');
+                    $citem->setCode('Route::url(' . var_export($item, true) . ')');
+                    $item = $citem;
                 }
             }
             $field[$key] = $item;

@@ -50,7 +50,7 @@ class ToolFieldForm extends Form
                 'data-val' => ['r' => true],
                 'data-val-msg' => ['r' => '请输入表单名称'],
                 'view-tab-index' => 'base',
-                'tips' => '提示：如果标题需要隐藏 可在标题前加 # 号 ',
+                'tips' => '提示：如果标题需要隐藏 可在标题前加 ! 号 ',
             ],
 
             'btn1' => [
@@ -255,7 +255,14 @@ class ToolFieldForm extends Form
                 'view-merge' => -1,
                 'view-tab-index' => 'base',
             ],
-
+            'forceDefault' => [
+                'label' => '强制默认值 [force-default]', // 字段标题
+                'type' => 'check', // 单选组
+                'tips' => '强制使用默认值，如果数据为空 或 0 则强制使用默认值',
+                'after-text' => '勾选空时强制使用默认值',
+                'default' => 0,
+                'view-tab-index' => 'base',
+            ],
             'extendAttrs' => [
                 'label' => '高级设置',
                 'type' => 'ajax_plugin',
@@ -287,12 +294,12 @@ class ToolFieldForm extends Form
             ],
 
             'valueFunc' => [
-                'label' => '处理值的行数 ',
+                'label' => '处理值的函数 ',
                 'type' => 'text',
                 'data-val' => ['regex' => '^\w+(\\\\\w+)*::\w+$'],
                 'data-val-msg' => ['regex' => '格式不正确。'],
                 'view-tab-index' => 'extend',
-                'tips' => '如果值需要后期加工，可以设置加工的PHP行数，完整的静态函数名，如 libs\MyClass::myFunc',
+                'tips' => '如果值需要后期加工，可以设置加工的PHP函数，完整的静态函数名，如 libs\MyClass::myFunc',
             ],
 
             'dynamic-line' => [
@@ -477,6 +484,14 @@ class ToolFieldForm extends Form
                 'type' => 'text',
                 'tips' => '如 blur，当离开后立即验证数据，如果有多个触发事件 可用 , 号隔开',
                 'view-tab-index' => 'valid',
+            ],
+            'validFunc' => [
+                'label' => '验证数值的函数 ',
+                'type' => 'text',
+                'data-val' => ['regex' => '^\w+(\\\\\w+)*::\w+$'],
+                'data-val-msg' => ['regex' => '格式不正确。'],
+                'view-tab-index' => 'extend',
+                'tips' => '如果值需要后期验证，可以设置验证的PHP函数，完整的静态函数名，如 libs\MyClass::myFunc',
             ],
             'formId' => [
                 'label' => '表单ID',

@@ -84,15 +84,12 @@ class SelectDialogModule extends Form implements ModuleInterface
 
             if ($key == 'dataText') {
                 if (isset($item[0]) && $item[0] == '@') {
-
                     $data = substr($item, 1);
-
                     if (Utils::isJsonString($data)) {
-
                         $temp = json_decode($data, true);
                         if (isset($temp['sql']) && isset($temp['field'])) {
-                            $item = new CodeItem();
-                            $item->addUse('beacon\DB');
+                            $citem = new CodeItem();
+                            $citem->addUse('beacon\DB');
                             $code = [];
                             $code[] = 'function($value=0){';
                             $code[] = '    $row = DB::getRow(' . var_export(trim($temp['sql']), true) . ',$value);';
@@ -100,23 +97,21 @@ class SelectDialogModule extends Form implements ModuleInterface
                             if (!empty($okey)) {
                                 $code[] = '    $text = ($row == null || !isset($row[' . var_export($okey, true) . '])) ? null : $row[' . var_export($okey, true) . '];';
                             } else {
-                                $code[] = '    $row = $row == null ? [] : array_value($row);';
+                                $code[] = '    $row = $row == null ? [] : array_values($row);';
                                 $code[] = '    $text = isset($row[0]) ? null : $row[0];';
                             }
                             $code[] = '    return $text;';
                             $code[] = '}';
-                            $item->setCode(join("\n", $code));
-                            $field['textFunc'] = $item;
+                            $citem->setCode(join("\n", $code));
+                            $field['textFunc'] = $citem;
                             continue;
                         } elseif (isset($temp['func'])) {
                             if (is_callable($temp['func'])) {
-                                $item = new CodeItem();
+                                $citem = new CodeItem();
                                 $code = 'function($value=0){ if(is_callable(' . var_export($temp['func'], true) . ')){return ' . $temp['func'] . '($value);} return null;}';
-                                $item->setCode($code);
-                                $field['textFunc'] = $item;
+                                $citem->setCode($code);
+                                $field['textFunc'] = $citem;
                                 continue;
-                            } else {
-                                $item = null;
                             }
                         }
                     }

@@ -60,7 +60,6 @@ class UpimggroupModule extends Form implements ModuleInterface
         ];
     }
 
-
     public static function exportField(MakeInterface $maker, array &$field, array $extend)
     {
         foreach ($extend as $key => $item) {

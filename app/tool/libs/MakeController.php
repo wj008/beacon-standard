@@ -161,7 +161,7 @@ class MakeController implements MakeInterface
         }
         //加载函数代码
         $this->out[] = '';
-        $this->out[] = '    //为ZeroController所需的配置文件';
+        $this->out[] = '    //为ZeroController所需的配置信息';
         $this->out[] = '    protected function zeroLoad(){ ';
         $this->out[] = '        return ' . Helper::export($zeroConfig, '        ') . ';';
         $this->out[] = '    }';

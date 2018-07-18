@@ -48,6 +48,7 @@ class CheckgroupModule extends Form implements ModuleInterface
                 'options' => [
                     [1, '直填值'],
                     [2, 'SQL查询'],
+                    [3, '混合'],
                 ],
                 'default' => 1,
                 'dynamic' => [
@@ -61,6 +62,10 @@ class CheckgroupModule extends Form implements ModuleInterface
                         'show' => 'optionsMethod,optionsParam,optionsSql,optionsField',
                         'hide' => 'options',
                     ],
+                    [
+                        'eq' => 3,
+                        'show' => 'optionsMethod,optionsParam,optionsSql,optionsField,options',
+                    ],
                 ],
             ],
 
@@ -70,8 +75,9 @@ class CheckgroupModule extends Form implements ModuleInterface
                 'plug-name' => 'OptionPlugin',
                 'plug-type' => 5,
                 'plug-mode' => 'composite',
-                'view-show-insert-btn' => true,
-                'view-show-sort-btn' => true,
+                'viewShowInsertBtn' => true,
+                'viewShowSortBtn' => true,
+                'viewShowRemoveBtn' => true,
             ],
 
             'optionsMethod' => [
@@ -102,7 +108,6 @@ class CheckgroupModule extends Form implements ModuleInterface
                 'tips' => '多个请用,隔开',
                 'box-style' => 'width:320px;',
             ],
-
             'itemType' => [
                 'label' => 'item值类型',
                 'type' => 'select',
@@ -112,7 +117,6 @@ class CheckgroupModule extends Form implements ModuleInterface
                     ['float', 'float'],
                 ],
             ],
-
             'names' => [
                 'label' => '拆分字段保存',
                 'type' => 'plugin',
@@ -138,56 +142,63 @@ class CheckgroupModule extends Form implements ModuleInterface
         $field['itemType'] = isset($extend['itemType']) ? $extend['itemType'] : 'string';
         $field['bitComp'] = isset($extend['bitComp']) ? boolval($extend['bitComp']) : false;
         $field['useUlList'] = isset($extend['useUlList']) ? boolval($extend['useUlList']) : false;
-        if (is_string($extend['options']) && Utils::isJsonString($extend['options'])) {
-            $extend['options'] = json_decode($extend['options'], true);
-        }
-        if ($field['bitComp']) {
-            $field['options'] = empty($extend['options']) ? [] : $extend['options'];
-        } else {
-            if (isset($extend['optionsType']) && $extend['optionsType'] == 2) {
-                $code = [];
-                $code[] = 'function(){';
-                $code[] = '    $options=[];';
-                if (!empty($extend['optionsMethod']) && !empty($extend['optionsParam'])) {
-                    $param = explode(',', $extend['optionsParam']);
-                    $code[] = '    $param=[];';
-                    $code[] = '    $req=Request::instance();';
-                    foreach ($param as $item) {
-                        if ($extend['optionsMethod'] == 'post') {
-                            $code[] = '    $param[]= $req->post(' . var_export(trim($item), true) . ');';
-                        } else if ($extend['optionsMethod'] == 'get') {
-                            $code[] = '    $param[]= $req->get(' . var_export(trim($item), true) . ');';
-                        } else {
-                            $code[] = '    $param[]= $req->param(' . var_export(trim($item), true) . ');';
-                        }
-                    }
-                    $code[] = '    $rows = DB::getList(' . var_export(trim($extend['optionsSql']), true) . ',$param);';
-                } else {
-                    $code[] = '    $rows = DB::getList(' . var_export(trim($extend['optionsSql']), true) . ');';
-                }
-                $code[] = '    foreach($rows as $rs){';
-                $code[] = '        $item=[];';
-                if (!empty($extend['optionsField'])) {
-                    $optfields = explode(',', $extend['optionsField']);
-                    foreach ($optfields as $opt) {
-                        $code[] = '        $item[] = isset($rs[' . var_export(trim($opt), true) . ']) ? $rs[' . var_export(trim($opt), true) . '] : \'\';';
-                    }
-                } else {
-                    $code[] = '        $rs = array_value($rs);';
-                    $code[] = '        $item[] = isset($rs[0]) ? $rs[0]: \'\';';
-                    $code[] = '        $item[] = isset($rs[1]) ? $rs[1]: \'\';';
-                }
-                $code[] = '        $options[] = $item;';
-                $code[] = '    }';
-                $code[] = '    return $options;';
-                $code[] = '}';
-                $field['options'] = new CodeItem();
-                $field['options']->addUse('beacon\Request');
-                $field['options']->addUse('beacon\DB');
-                $field['options']->setCode(join("\n", $code));
-            } else {
-                $field['options'] = empty($extend['options']) ? [] : $extend['options'];
+
+        $optionsType = isset($extend['optionsType']) ? intval($extend['optionsType']) : 1;
+        $options = [];
+        if ($optionsType == 1 || $optionsType == 3) {
+            if (is_string($extend['options']) && Utils::isJsonString($extend['options'])) {
+                $options = json_decode($extend['options'], true);
             }
         }
+
+        if ($optionsType == 2 || $optionsType == 3) {
+            $code = [];
+            $code[] = 'function(){';
+            if ($optionsType == 3) {
+                $code[] = '    $options=' . var_export($options, true) . ';';
+            } else {
+                $code[] = '    $options=[];';
+            }
+            if (!empty($extend['optionsMethod']) && !empty($extend['optionsParam'])) {
+                $param = explode(',', $extend['optionsParam']);
+                $code[] = '    $param=[];';
+                $code[] = '    $req=Request::instance();';
+                foreach ($param as $item) {
+                    if ($extend['optionsMethod'] == 'post') {
+                        $code[] = '    $param[]= $req->post(' . var_export(trim($item), true) . ');';
+                    } else if ($extend['optionsMethod'] == 'get') {
+                        $code[] = '    $param[]= $req->get(' . var_export(trim($item), true) . ');';
+                    } else {
+                        $code[] = '    $param[]= $req->param(' . var_export(trim($item), true) . ');';
+                    }
+                }
+                $code[] = '    $rows = DB::getList(' . var_export(trim($extend['optionsSql']), true) . ',$param);';
+            } else {
+                $code[] = '    $rows = DB::getList(' . var_export(trim($extend['optionsSql']), true) . ');';
+            }
+            $code[] = '    foreach($rows as $rs){';
+            $code[] = '        $item=[];';
+            if (!empty($extend['optionsField'])) {
+                $optfields = explode(',', $extend['optionsField']);
+                foreach ($optfields as $opt) {
+                    $code[] = '        $item[] = isset($rs[' . var_export(trim($opt), true) . ']) ? $rs[' . var_export(trim($opt), true) . '] : \'\';';
+                }
+            } else {
+                $code[] = '        $rs = array_values($rs);';
+                $code[] = '        $item[] = isset($rs[0]) ? $rs[0]: \'\';';
+                $code[] = '        $item[] = isset($rs[1]) ? $rs[1]: \'\';';
+            }
+            $code[] = '        $options[] = $item;';
+            $code[] = '    }';
+            $code[] = '    return $options;';
+            $code[] = '}';
+            $options = new CodeItem();
+            $options->addUse('beacon\Request');
+            $options->addUse('beacon\DB');
+            $options->setCode(join("\n", $code));
+        }
+
+        $field['options'] = $options;
+
     }
 }

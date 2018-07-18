@@ -79,7 +79,7 @@ class MultipleModule extends Form implements ModuleInterface
                             if (!empty($okey)) {
                                 $code[] = '    $text = ($row == null || !isset($row[' . var_export($okey, true) . '])) ? null : $row[' . var_export($okey, true) . '];';
                             } else {
-                                $code[] = '    $row = $row == null ? [] : array_value($row);';
+                                $code[] = '    $row = $row == null ? [] : array_values($row);';
                                 $code[] = '    $text = isset($row[0]) ? null : $row[0];';
                             }
                             $code[] = '    return $text;';

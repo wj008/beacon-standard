@@ -188,7 +188,7 @@ class MakeForm implements MakeInterface
                             if (!empty($okey)) {
                                 $code[] = '    $value = ($row == null || !isset($row[' . var_export($okey, true) . '])) ? null : $row[' . var_export($okey, true) . '];';
                             } else {
-                                $code[] = '    $row = $row == null ? [] : array_value($row);';
+                                $code[] = '    $row = $row == null ? [] : array_values($row);';
                                 $code[] = '    $value = isset($row[0]) ? null : $row[0];';
                             }
                             $code[] = '    return $value;';
@@ -304,6 +304,9 @@ class MakeForm implements MakeInterface
         }
         if (!empty($this->frow['viewNotBack'])) {
             $this->out[] = '    public $viewNotBack=' . var_export(boolval($this->frow['viewNotBack']), true) . ';';
+        }
+        if (!empty($this->frow['viewTemplate'])) {
+            $this->out[] = '    public $viewTemplate=' . var_export(boolval($this->frow['viewTemplate']), true) . ';';
         }
         if ($this->frow['viewUseTab'] == 1) {
             $temp = json_decode($this->frow['viewTabs'], true);

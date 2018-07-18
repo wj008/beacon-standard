@@ -310,7 +310,7 @@ class ToolSearch extends ToolController
             }
             $vals = [];
             foreach (['name', 'label', 'type', 'hideBox',
-                         'beforeText', 'afterText', 'viewMerge', 'default',
+                         'beforeText', 'afterText', 'viewMerge', 'default', 'forceDefault',
                          'extendAttrs', 'customAttrs', 'boxPlaceholder'
                          , 'boxClass'
                          , 'boxStyle'
@@ -344,5 +344,21 @@ class ToolSearch extends ToolController
         $this->success('拷贝成功');
     }
 
+    public function changetabAction(int $id = 0)
+    {
+        $row = DB::getRow('select * from @pf_tool_search where id=?', $id);
+        if ($row == null) {
+            $this->error('不存在的数据');
+        }
+        if ($row['viewTabIndex'] == 'base') {
+            DB::update('@pf_tool_search', ['viewTabIndex' => 'senior'], $id);
+        } else {
+            DB::update('@pf_tool_search', ['viewTabIndex' => 'base'], $id);
+        }
+        $this->listId = $row['listId'];
+        MakeController::make($this->listId);
+        $this->success('设置成功');
+
+    }
 
 }

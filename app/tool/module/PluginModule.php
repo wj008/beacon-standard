@@ -83,6 +83,13 @@ class PluginModule extends Form implements ModuleInterface
                     [5, '紧凑(按钮右)'],
                 ],
             ],
+
+            'viewShowRemoveBtn' => [
+                'label' => '移除按钮',
+                'type' => 'check',
+                'afterText' => '勾选显示移除按钮',
+                'default'=>1
+            ],
             'viewShowInsertBtn' => [
                 'label' => '插入按钮',
                 'type' => 'check',

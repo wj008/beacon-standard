@@ -30,12 +30,11 @@ class ToolListForm extends Form
     public $useAjax = true;
     public $tbname = '@pf_tool_list';
     public $viewScript = 'Yee.loader(\'/tool/js/tool_list.js\');';
-    public $viewDescription = '注意：为了防止模板与脚本等冲突，除了SQL模板以外，其他输入框中如使用到模板渲染的，模板引擎分界符 为 `{@` 和 `@}`';
+    public $viewDescription = '注意：为了防止模板与脚本等冲突，如果在脚本中有{}的，请使用 {literal}{/literal} 包括起来';
 
     protected function load()
     {
         return [
-
             'formId' => [
                 'label' => '选择表单模型',
                 'data-val' => ['r' => true],
@@ -56,7 +55,6 @@ class ToolListForm extends Form
                 },
                 'view-tab-index' => 'base',
             ],
-
             'key' => [
                 'label' => '列表标识符',
                 'data-val' => ['r' => true, 'regex' => '^[A-Z][A-Za-z0-9]+$', 'remote' => [Route::url('~/toolList/checkKey'), 'Post', 'eid']],
@@ -239,6 +237,7 @@ class ToolListForm extends Form
                 'plug-type' => 5,
                 'plug-mode' => 'composite',
                 'view-tab-index' => 'data',
+                'viewShowRemoveBtn' => true,
             ],
 
             'useSqlTemplate' => [
@@ -268,6 +267,7 @@ class ToolListForm extends Form
                 'box-placeholder' => '附加表',
                 'plug-mode' => 'composite',
                 'view-tab-index' => 'data',
+                'viewShowRemoveBtn' => true,
             ],
             'tbField' => [
                 'label' => '查询字段',
@@ -323,6 +323,7 @@ class ToolListForm extends Form
                 'plug-type' => 3,
                 'plug-mode' => 'composite',
                 'view-tab-index' => 'operate',
+                'viewShowRemoveBtn' => true,
                 'viewShowInsertBtn' => true,
                 'viewShowSortBtn' => true,
             ],
@@ -386,6 +387,7 @@ class ToolListForm extends Form
                 'plug-type' => 3,
                 'plug-mode' => 'composite',
                 'view-tab-index' => 'operate',
+                'viewShowRemoveBtn' => true,
                 'viewShowInsertBtn' => true,
                 'viewShowSortBtn' => true,
             ],
@@ -417,6 +419,7 @@ class ToolListForm extends Form
                 'plug-type' => 3,
                 'plug-mode' => 'composite',
                 'view-tab-index' => 'operate',
+                'viewShowRemoveBtn' => true,
                 'viewShowInsertBtn' => true,
                 'viewShowSortBtn' => true,
             ],
@@ -434,6 +437,7 @@ class ToolListForm extends Form
                 'plug-type' => 3,
                 'plug-mode' => 'composite',
                 'view-tab-index' => 'other',
+                'viewShowRemoveBtn' => true,
                 'viewShowInsertBtn' => true,
                 'viewShowSortBtn' => true,
             ],
@@ -452,11 +456,11 @@ class ToolListForm extends Form
                 'dynamic' => [
                     [
                         'eq' => 1,
-                        'show' => 'viewTabs',
+                        'show' => 'viewTabs,viewTabRight',
                     ],
                     [
                         'neq' => 1,
-                        'hide' => 'viewTabs',
+                        'hide' => 'viewTabs,viewTabRight',
                     ],
                 ],
             ],
@@ -466,6 +470,12 @@ class ToolListForm extends Form
                 'plug-name' => 'ListTabPlugin',
                 'plug-type' => 3,
                 'plug-mode' => 'composite',
+                'viewShowRemoveBtn' => true,
+                'view-tab-index' => 'other',
+            ],
+            'viewTabRight' => [
+                'label' => '分栏右侧', //标题
+                'type' => 'textarea',
                 'view-tab-index' => 'other',
             ],
 

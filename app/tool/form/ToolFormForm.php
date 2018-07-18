@@ -199,6 +199,11 @@ class ToolFormForm extends Form
                     ['value' => 1, 'text' => '对话框(多条)'],
                 ],
             ],
+            'viewTemplate' => [
+                'label' => '使用模板',
+                'tips' => '如果不输入使用默认模板 bodyForm.tpl 渲染',
+                'view-tab-index' => 'base',
+            ],
             'viewUseTab' => [
                 'label' => '是否分栏', //标题
                 'type' => 'check', // 这里是一个 checkbox

@@ -9,6 +9,7 @@
 namespace app\tool\module;
 
 
+use app\tool\libs\CodeItem;
 use app\tool\libs\MakeInterface;
 use app\tool\libs\ModuleInterface;
 use beacon\Form;
@@ -132,7 +133,7 @@ class RadiogroupModule extends Form implements ModuleInterface
                         $code[] = '        $item[] = isset($rs[' . var_export(trim($opt), true) . ']) ? $rs[' . var_export(trim($opt), true) . '] : \'\';';
                     }
                 } else {
-                    $code[] = '        $rs = array_value($rs);';
+                    $code[] = '        $rs = array_values($rs);';
                     $code[] = '        $item[] = isset($rs[0]) ? $rs[0]: \'\';';
                     $code[] = '        $item[] = isset($rs[1]) ? $rs[1]: \'\';';
                 }

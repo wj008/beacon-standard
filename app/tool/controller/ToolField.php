@@ -8,7 +8,6 @@
 
 namespace app\tool\controller;
 
-
 use app\tool\form\ToolFieldForm;
 use app\tool\libs\MakeForm;
 use beacon\DB;

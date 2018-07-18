@@ -197,6 +197,15 @@ class ToolSearchForm extends Form
                 'view-tab-index' => 'base',
             ],
 
+            'forceDefault' => [
+                'label' => '强制默认值 [force-default]', // 字段标题
+                'type' => 'check', // 单选组
+                'tips' => '强制使用默认值，如果数据为空 或 0 则强制使用默认值',
+                'after-text' => '勾选空时强制使用默认值',
+                'default' => 0,
+                'view-tab-index' => 'base',
+            ],
+
             'extendAttrs' => [
                 'label' => '高级设置',
                 'type' => 'ajax_plugin',

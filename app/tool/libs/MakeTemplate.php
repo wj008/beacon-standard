@@ -9,6 +9,7 @@
 namespace app\tool\libs;
 
 
+use beacon\Console;
 use beacon\DB;
 use beacon\Utils;
 
@@ -48,6 +49,8 @@ class MakeTemplate
         $this->createListSearch();
         $this->createListTable();
         $this->createPagebar();
+        $this->createHead();
+        $this->createFoot();
     }
 
     private function createListTab()
@@ -66,20 +69,27 @@ class MakeTemplate
         $this->out[] = '<ul yee-module="tablink">';
         foreach ($tabItems as $idx => $item) {
             if ($item['useCode']) {
-                $this->out[] = "<li{if \$this->get('viewTab:i',0)=={$idx}} class=\"curr\"{/if}>{literal left='{@' right='@}'}";
-                $this->out[] = $item['useCode'];
-                $this->out[] = "{/literal}</li>";
+                $this->out[] = $item['code'];
+
             } else {
                 if (!empty($item['url']) && ($item['url'][0] == '~' || $item['url'][0] == '^') && isset($item['url'][1]) && $item['url'][1] == '/') {
                     $this->out[] = "<li{if \$this->get('tabIndex:i',0)=={$idx}} class=\"curr\"{/if}><a href=\"{url path=" . var_export($item['url'], true) . "}\" data-tab-index='{$idx}'>" . htmlspecialchars($item['name']) . "</a></li>";
                 } else {
                     $this->out[] = "<li{if \$this->get('tabIndex:i',0)=={$idx}} class=\"curr\"{/if}>";
-                    $this->out[] = "{literal left='{@' right='@}'}<a href=\"{$item['url']}\" data-tab-index='{$idx}'>" . htmlspecialchars($item['name']) . "</a>{/literal}";
+                    $this->out[] = "<a href=\"{$item['url']}\" data-tab-index='{$idx}'>" . htmlspecialchars($item['name']) . "</a>";
                     $this->out[] = "</li>";
                 }
             }
         }
-        $this->out[] = '</ul></div>';
+        $this->out[] = '</ul>';
+
+        if (!empty($this->lrow['viewTabRight'])) {
+            $this->out[] = '<div  class="yeeui-tab-right">';
+            $this->out[] = $this->lrow['viewTabRight'];
+            $this->out[] = '</div>';
+        }
+
+        $this->out[] = '</div>';
         $this->out[] = "{/block}";
     }
 
@@ -100,15 +110,8 @@ class MakeTemplate
             $btnCode[] = $btn['code'];
         }
         $btnHtml = join("\n", $btnCode);
-        $literal = preg_match('@\{@', $btnHtml);
         if ($btnHtml) {
-            if ($literal) {
-                $this->out[] = "{literal left='{@' right='@}'}";
-            }
             $this->out[] = $btnHtml;
-            if ($literal) {
-                $this->out[] = "{/literal}";
-            }
         }
         $this->out[] = '</div></div>';
         $this->out[] = "{/block}";
@@ -170,9 +173,7 @@ class MakeTemplate
         if (!empty($code)) {
             $this->out[] = '</div>';
             $this->out[] = '<div style="text-align: right; float:right;">';
-            $this->out[] = "{literal left='{@' right='@}'}";
             $this->out[] = join("\n", $code);
-            $this->out[] = "{/literal}";
             $this->out[] = '</div><div class="clear"></div>';
         }
         $this->out[] = '</div>';
@@ -193,7 +194,7 @@ class MakeTemplate
         if ($this->lrow['useSelect']) {
             $thCode[] = '<th width="40"><input type="checkbox" class="check-all"></th>';
             $tdCode[] = '<td width="40" align="center" v-html="rs.' . $keyname . '"></td>';
-            $this->hack[] = "{@hack fn='{$keyname}' rs=null@}" . '<input type="checkbox" class="check-item" name="sel_id" value="{@$rs.id@}">{@/hack@}';
+            $this->hack[] = "{hack fn='{$keyname}' rs=null}" . '<input type="checkbox" class="check-item" name="sel_id" value="{$rs.id}">{/hack}';
             $index++;
             $keyname = '_' . $index;
         }
@@ -233,7 +234,7 @@ class MakeTemplate
                 $tdAttr = join(' ', $tdAttr);
                 $thCode[] = '<th ' . $thAttr . '>' . (isset($field['title']) ? $field['title'] : '') . '</th>';
                 $tdCode[] = '<td ' . $tdAttr . '></td>';
-                $this->hack[] = "{@hack fn='{$keyname}' rs=null@}" . (isset($field['code']) ? $field['code'] : '') . '{@/hack@}';
+                $this->hack[] = "{hack fn='{$keyname}' rs=null}" . (isset($field['code']) ? $field['code'] : '') . '{/hack}';
                 $index++;
                 $keyname = '_' . $index;
             }
@@ -271,11 +272,11 @@ class MakeTemplate
             foreach ($listBtns as $btn) {
                 $code[] = $btn['code'];
             }
-            $this->hack[] = "{@hack fn='{$keyname}' rs=null@}" . (join("\n", $code)) . '{@/hack@}';
+            $this->hack[] = "{hack fn='{$keyname}' rs=null}" . (join("\n", $code)) . '{/hack}';
         }
         //生成表格
         $this->out[] = '';
-        $this->out[] = "{block name='listTable' left='{@' right='@}'}";
+        $this->out[] = "{block name='listTable'}";
         $table = [];
         $table[] = '<table id="list" cellspacing="0" cellpadding="0" border="0" class="yee-datatable" yee-module="datatable" data-bind-form="#searchform"';
         $table[] = ' data-auto-load="true"';
@@ -308,7 +309,7 @@ class MakeTemplate
     {
         if ($this->lrow['usePageList']) {
             $this->out[] = '';
-            $this->out[] = "{block name='pagebar' left='{@' right='@}'}";
+            $this->out[] = "{block name='pagebar'}";
             $this->out[] = '<div yee-module="pagebar" data-bind="#list" class="yeeui-pagebar">
     <div class="pagebar" v-name="bar"></div>
     <div class="pagebar_info">
@@ -321,6 +322,27 @@ class MakeTemplate
     }
 
 
+    private function createFoot()
+    {
+        if (!empty($this->lrow['buttomTemplate'])) {
+            $this->out[] = '';
+            $this->out[] = "{block name='foot'}";
+            $this->out[] = $this->lrow['buttomTemplate'];
+            $this->out[] = "{/block}";
+        }
+    }
+
+    private function createHead()
+    {
+        if (!empty($this->lrow['headTemplate'])) {
+            $this->out[] = '';
+            $this->out[] = "{block name='head'}";
+            $this->out[] = $this->lrow['headTemplate'];
+            $this->out[] = "{/block}";
+        }
+    }
+
+
     public function getCode()
     {
         return join("\n", $this->out);
@@ -329,9 +351,7 @@ class MakeTemplate
     public function getHackCode()
     {
         $out = [];
-        $out[] = '{literal left=\'{@\' right=\'@}\'}';
         $out[] = join("\n", $this->hack);
-        $out[] = '{/literal}';
         return join("\n", $out);
     }
 
