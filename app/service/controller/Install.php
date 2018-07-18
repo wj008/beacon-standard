@@ -150,17 +150,21 @@ INSERT INTO `@pf_sysmenu` VALUES (\'7\', \'工具箱\', \'1\', \'6\', \'1\', \'\
 INSERT INTO `@pf_sysmenu` VALUES (\'8\', \'系统菜单管理\', \'1\', \'7\', \'1\', \'~/Sysmenu\', \'50\', null, null);');
 
                 //安装工具库==============
-                $db->exec('DROP TABLE IF EXISTS `@pf_tool_application`;
+                $db->exec('
+-- ----------------------------
+-- Table structure for @pf_tool_application
+-- ----------------------------
+DROP TABLE IF EXISTS `@pf_tool_application`;
 CREATE TABLE `@pf_tool_application` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `namespace` varchar(255) DEFAULT NULL,
   `module` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for sl_tool_field
+-- Table structure for @pf_tool_field
 -- ----------------------------
 DROP TABLE IF EXISTS `@pf_tool_field`;
 CREATE TABLE `@pf_tool_field` (
@@ -183,6 +187,7 @@ CREATE TABLE `@pf_tool_field` (
   `close` tinyint(1) DEFAULT NULL,
   `viewClose` tinyint(1) DEFAULT NULL,
   `offEdit` tinyint(1) DEFAULT NULL,
+  `forceDefault` tinyint(1) DEFAULT NULL,
   `default` text,
   `extendAttrs` text,
   `customAttrs` text,
@@ -211,11 +216,12 @@ CREATE TABLE `@pf_tool_field` (
   `names` text,
   `viewTabIndex` varchar(255) DEFAULT NULL,
   `valueFunc` varchar(255) DEFAULT NULL,
+  `validFunc` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=639 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for sl_tool_form
+-- Table structure for @pf_tool_form
 -- ----------------------------
 DROP TABLE IF EXISTS `@pf_tool_form`;
 CREATE TABLE `@pf_tool_form` (
@@ -248,11 +254,12 @@ CREATE TABLE `@pf_tool_form` (
   `valueFuncSql` text,
   `valueFuncField` varchar(255) DEFAULT NULL,
   `viewNotBack` tinyint(1) DEFAULT NULL,
+  `viewTemplate` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for sl_tool_list
+-- Table structure for @pf_tool_list
 -- ----------------------------
 DROP TABLE IF EXISTS `@pf_tool_list`;
 CREATE TABLE `@pf_tool_list` (
@@ -301,14 +308,15 @@ CREATE TABLE `@pf_tool_list` (
   `attention` text,
   `assign` text,
   `viewTabs` text,
+  `viewTabRight` text,
   `viewUseTab` tinyint(1) DEFAULT NULL,
   `leftFixed` int(11) DEFAULT NULL,
   `rightFixed` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for sl_tool_search
+-- Table structure for @pf_tool_search
 -- ----------------------------
 DROP TABLE IF EXISTS `@pf_tool_search`;
 CREATE TABLE `@pf_tool_search` (
@@ -323,6 +331,7 @@ CREATE TABLE `@pf_tool_search` (
   `sort` int(11) DEFAULT NULL,
   `viewMerge` int(11) DEFAULT NULL,
   `default` text,
+  `forceDefault` tinyint(1) DEFAULT NULL,
   `extendAttrs` text,
   `customAttrs` text,
   `boxPlaceholder` text,
@@ -335,14 +344,15 @@ CREATE TABLE `@pf_tool_search` (
   `tbWhereType` int(11) DEFAULT NULL,
   `varType` varchar(255) DEFAULT \'\',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8;
-');
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;');
 
                 $db->exec('
 INSERT INTO `@pf_sysmenu` VALUES (\'10\', \'项目管理\', \'1\', \'7\', \'0\', \'^/tool/ToolApplication\', \'1\', \'\', \'\');
 INSERT INTO `@pf_sysmenu` VALUES (\'11\', \'表单模型\', \'1\', \'7\', \'0\', \'^/tool/ToolForm\', \'2\', \'\', \'\');
 INSERT INTO `@pf_sysmenu` VALUES (\'12\', \'列表模型\', \'1\', \'7\', \'0\', \'^/tool/ToolList\', \'3\', \'\', \'\');
 ');
+
+                $db->exec('INSERT INTO `@pf_tool_application` VALUES (\'1\', \'系统后台\', \'app\\admin\', \'admin\');');
 
                 unset($vals['is_create']);
                 $code = '<?php return ' . var_export($vals, TRUE) . ';';
