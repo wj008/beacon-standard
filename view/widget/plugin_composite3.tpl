@@ -24,7 +24,7 @@
         <label class="form-label">{$field->label}：</label>
         <div class="plugin-content">{$content|raw}</div>
         <div class="form-plugin">
-            <a href="javascript:;" class="form-inp button plugin-add"><i class="icofont icofont-plus-circle"></i>新增行</a> <span id="{$field->boxId}-validation"></span>
+            <a href="javascript:;" class="form-inp button plugin-add"><i class="icofont icofont-plus-circle"></i>新增行</a>{if $field->tips}<span class="field-tips">{$field->tips}</span>{/if} <span id="{$field->boxId}-validation"></span>
         </div>
     </div>
 {/hack}
@@ -33,7 +33,7 @@
 
         <div class="form-inline" style="background:#f8f8f8; display: block;">
             <label class="form-label inline" style="text-align: left;">&nbsp;&nbsp;&nbsp;第 <span class="plugin-index red2" style="font-size: 18px;"></span> 项&nbsp;&nbsp;&nbsp;</label>
-            <a href="javascript:;" class="form-inp button plugin-del"><i class="icofont icofont-minus-circle"></i>移除</a>
+            {if $field->viewShowRemoveBtn}<a href="javascript:;" class="form-inp button plugin-del"><i class="icofont icofont-minus-circle"></i>移除</a>{/if}
             {if $field->viewShowInsertBtn}<a href="javascript:;" class="form-inp button plugin-insert"><i class="icofont icofont-puzzle"></i>插入</a>{/if}
             {if $field->viewShowSortBtn}
                 <a href="javascript:;" class="form-inp button plugin-upsort"><i class="icofont icofont-long-arrow-up"></i>上移</a>

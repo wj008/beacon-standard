@@ -28,7 +28,10 @@
             if (source) {
                 $('#recordsCount').text(source.pdata['recordsCount']);
             }
-            $('.reload').on('success', function (ev) {
+            $('.reload').on('success', function (ev,ret) {
+                if(window.YeeDialog){
+                  window.success(ret);
+                }
                 $('#list').trigger('reload');
             });
         });

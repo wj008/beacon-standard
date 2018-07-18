@@ -16,7 +16,7 @@
         <label class="form-label">{$field->label}：</label>
         <div class="plugin-content">{$content|raw}</div>
         <div class="form-plugin">
-            <a href="javascript:;" class="form-inp button plugin-add"><i class="icofont icofont-plus-circle"></i>新增行</a> <span id="{$field->boxId}-validation"></span>
+            <a href="javascript:;" class="form-inp button plugin-add"><i class="icofont icofont-plus-circle"></i>新增行</a>{if $field->tips} <span class="field-tips">{$field->tips}</span>{/if} <span id="{$field->boxId}-validation"></span>
         </div>
     </div>
 {/hack}
@@ -32,7 +32,8 @@
         {foreach from=$form->getHideBox() item=value key=name}
             <input type="hidden" name="{$name}" value="{$value}"/>
         {/foreach}
-        <div class="form-inline" style="margin-right: 10px"><a href="javascript:;" class="form-inp button plugin-del"><i class="icofont icofont-minus-circle"></i>移除</a>
+        <div class="form-inline" style="margin-right: 10px">
+            {if $field->viewShowRemoveBtn}<a href="javascript:;" class="form-inp button plugin-del"><i class="icofont icofont-minus-circle"></i>移除</a>{/if}
             {if $field->viewShowInsertBtn}<a href="javascript:;" class="form-inp button plugin-insert"><i class="icofont icofont-puzzle"></i>插入</a>{/if}
             {if $field->viewShowSortBtn}
                 <a href="javascript:;" class="form-inp button plugin-upsort"><i class="icofont icofont-long-arrow-up"></i>上移</a>

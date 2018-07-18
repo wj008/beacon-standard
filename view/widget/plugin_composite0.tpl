@@ -24,7 +24,7 @@
          data-index="{$lastIndex}"{if $field->dataMinSize} data-min-size="{$field->dataMinSize}"{/if}{if $field->dataMaxSize} data-max-size="{$field->dataMaxSize}"{/if} data-source="{$code}">
         <div class="form-plugin">
             <label class="form-label">{$field->label}：</label>
-            <div class="form-box"><a href="javascript:;" class="form-inp button plugin-add"><i class="icofont icofont-plus-circle"></i>新增行</a> <span id="{$field->boxId}-validation"></span></div>
+            <div class="form-box"><a href="javascript:;" class="form-inp button plugin-add"><i class="icofont icofont-plus-circle"></i>新增行</a>{if $field->tips}<span class="field-tips">{$field->tips}</span>{/if} <span id="{$field->boxId}-validation"></span></div>
         </div>
         <div class="plugin-content">{$content|raw}</div>
     </div>
@@ -33,7 +33,8 @@
     <div class="form-item plugin-item" style="margin-bottom: 3px; padding-left: 0; padding-right: 0;">
         <div class="form-inline" style="background:#f8f8f8; display: block;">
             <label class="form-label" style="text-align: left;">&nbsp;&nbsp;&nbsp;第 <span class="plugin-index red2" style="font-size: 18px;"></span> 项</label>
-            <div class="form-box"><a href="javascript:;" class="form-inp button plugin-del"><i class="icofont icofont-minus-circle"></i>移除</a>
+            <div class="form-box">
+                {if $field->viewShowRemoveBtn}<a href="javascript:;" class="form-inp button plugin-del"><i class="icofont icofont-minus-circle"></i>移除</a>{/if}
                 {if $field->viewShowInsertBtn}<a href="javascript:;" class="form-inp button plugin-insert"><i class="icofont icofont-puzzle"></i>插入</a>{/if}
                 {if $field->viewShowSortBtn}
                     <a href="javascript:;" class="form-inp button plugin-upsort"><i class="icofont icofont-long-arrow-up"></i>上移</a>
