@@ -184,6 +184,9 @@ class Boot
                         }
                     }
                 }
+                else {
+                    throw new RouteError('未公开方法:' . $act . 'Action');
+                }
             } catch (\Error $e) {
                 throw $e;
             } catch (\Exception $e) {
