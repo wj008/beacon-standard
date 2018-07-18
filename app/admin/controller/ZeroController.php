@@ -9,7 +9,7 @@
 namespace app\admin\controller;
 
 
-use beacon\Config;
+use beacon\Console;
 use beacon\DB;
 use beacon\Form;
 
@@ -20,6 +20,14 @@ abstract class ZeroController extends AdminController
     public function initialize()
     {
         $this->zero = $this->zeroLoad();
+        if (isset($this->zero['actionForm'])) {
+            $actionForm = preg_replace_callback('@\\\\zero\\\\form\\\\Zero(.*)$@', function ($m) {
+                return '\\form\\' . $m[1];
+            }, $this->zero['actionForm']);
+            if (class_exists($actionForm)) {
+                $this->zero['actionForm'] = $actionForm;
+            }
+        }
         parent::initialize();
     }
 

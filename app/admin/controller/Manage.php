@@ -3,6 +3,14 @@
 namespace app\admin\controller;
 
 
+/**
+ * Created by PhpStorm.
+ * User: wj008
+ * Date: 2018/1/5
+ * Time: 1:26
+ */
+
+
 use app\admin\form\ManageForm;
 use beacon\Console;
 use beacon\DB;

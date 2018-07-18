@@ -305,7 +305,6 @@
                 return val !== str;
             });
             regFunc("equalto", function (val, str) {
-                console.log(val, str, $(str).val());
                 return val === $(str).val();
             });
             regFunc("mobile", function (val) {

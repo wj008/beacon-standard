@@ -39,6 +39,7 @@
         try {
             document.body.appendChild(script);
         } catch (e) {
+
         }
     }
     var cssLoader = function (url) {
@@ -269,6 +270,7 @@
     Yee.ready = function (fn) {
         readyCallback.push(fn);
     };
+    var renderState = 0;
     //渲染
     Yee.render = function () {
         //如果已经渲染就不再渲染
@@ -276,9 +278,11 @@
             return;
         }
         Yee.rendered = true;
+        renderState = 1;
         Yee.update(function () {
             // console.log('更新了');
-            $('html').show();
+            $('html').css('pointer-events', '');
+            renderState = 2;
             if (readyCallback.length > 0) {
                 for (var i = 0; i < readyCallback.length; i++) {
                     if (typeof(readyCallback[i]) == 'function') {
@@ -414,11 +418,18 @@
         }
         return $(this).triggerHandler(event, args);
     }
+    var jqInit = $.fn.ready; //覆盖jq 的 $(function);
+    $.fn.ready = function (fn) {
+        if (renderState == 2) {
+            return jqInit.call(this, fn);
+        }
+        Yee.ready(fn);
+    }
     $.fn.getModuleInstance = function (module) {
         return Yee.getModuleInstance(this, module);
     }
     var isIE = navigator.userAgent.match(/MSIE\s*(\d+)/i);
-    $('html').hide();
+    $('html').css('pointer-events', 'none');
     isIE = isIE ? (isIE[1] < 9) : false;
     if (isIE) {
         var itv = setInterval(function () {

@@ -40,6 +40,7 @@
         var firstbox = null;
         var pingding = false;//进行中
 
+
         //更新值
         var updateValue = function () {
             var vlas = [];
@@ -118,7 +119,6 @@
             }
             box.show();
         };
-
 
         var onchange = function (vals) {
             var box = $(this);
@@ -258,6 +258,7 @@
                 fbox.data('temp-lev', 1);
                 initBox(fbox, 1, items, vals);
             }
+            pingding = false;
         };
         if (datatype == 'array') {
             qem.hide();
@@ -292,6 +293,12 @@
             level = qem.data('level') || 0;
             createBox(element, source, values);
         };
+        qem.on('reload', function (ev, source) {
+            if (source) {
+                qem.data('source', source);
+                update();
+            }
+        });
     }
 
     Yee.extend(':input', 'linkage', Linkage);

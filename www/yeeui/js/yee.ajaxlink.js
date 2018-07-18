@@ -112,6 +112,7 @@
                         if (ret.error && typeof (ret.error) === 'string') {
                             layer.msg(ret.error, {icon: 0, time: 2000});
                         }
+
                     }
                 }
             });

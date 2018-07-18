@@ -28,11 +28,5 @@
     "beacon-view-dir": "view/*",
     "beacon-web-dir": "www/*",
     "beacon-debug-file": "debug.js"
-  },
-  "repositories": {
-    "packagist": {
-      "type": "composer",
-      "url": "https://packagist.phpcomposer.com"
-    }
   }
 }

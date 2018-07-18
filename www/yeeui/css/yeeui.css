@@ -58,7 +58,11 @@ a:hover {
 .yeeui-tabs ul {
     float: left
 }
-
+.yeeui-tab-right{
+    float: right;
+    line-height: 35px;
+    height: 35px;
+}
 .yeeui-tabs ul li {
     height: 35px;
     line-height: 35px;
@@ -572,3 +576,117 @@ i.dashed {
     background: center top url(../images/vvline.gif) repeat-y;
 }
 
+
+
+
+a.yeeui-color-selecter {
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: -5px;
+    width: 24px;
+    text-decoration: none;
+    position:relative;
+    height: 22px;
+    background-image: url(../images/sdopx.color.gif);
+    zoom:1;
+}
+a.yeeui-color-selecter div.yeeui-color-meun{
+    display:block;
+    top:23px;
+    position: absolute;
+    background-color: #F7F7F7;
+    border-left: solid 1px #EEE;
+    border-top: solid 1px #EEE;
+    border-right: solid 1px #EEE;
+    border-bottom: solid 1px #EEE;
+    _border-right: solid 1px #999;
+    _border-bottom: solid 1px #999;
+    -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    padding:5px 0;
+    zoom:1;
+    z-index: 1000000;
+}
+
+a.yeeui-color-selecter ul.yeeui-color-head {
+    margin: 0px 5px;
+    padding: 0;
+    height: 28px;
+    overflow:hidden;
+}
+a.yeeui-color-selecter ul.yeeui-color-head li{
+    padding: 0 5px 0 0;
+    list-style: none outside none;
+    float: left;
+    line-height: 18px;
+    height:26px;
+    overflow:hidden;
+}
+a.yeeui-color-selecter ul.yeeui-color-head div{
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    width: 55px;
+    background-color: #000000;
+    border-left: solid 1px #CCCCCC;
+    border-top: solid 1px #CCCCCC;
+    border-right: solid 1px #2B2B2B;
+    border-bottom: solid 1px #2B2B2B;
+}
+a.yeeui-color-selecter ul.yeeui-color-head span{
+    float: left;
+    font-size: 12px;
+    color: #666;
+    line-height: 20px;
+}
+a.yeeui-color-selecter ul.yeeui-color-head input{
+    margin: 0;
+    padding: 0;
+    border: solid 1px #999;
+    height: 21px;
+    font-size: 12px;
+    width: 66px;
+}
+
+a.yeeui-color-selecter div.yeeui-color-body{
+    margin: 0px 6px;
+    *margin: 0px 5px;
+    float: left;
+    padding: 0px;
+    font-size: 1px;
+    line-height: 1px;
+}
+
+a.yeeui-color-selecter div.yeeui-color-body ul{
+    width: 11px;
+    padding: 0px;
+    float: left;
+    margin: 0;
+    list-style: none outside none;
+}
+
+
+a.yeeui-color-selecter div.yeeui-color-body li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    float: left;
+    border: solid 1px #000000;
+    margin-top: -1px;
+    margin-left: -1px;
+    width: 10px;
+    height: 10px;
+    *width: 12px;
+    *height:12px;
+    line-height: 2px;
+    font-size: 2px;
+    position:relative;
+}
+
+a.yeeui-color-selecter div.yeeui-color-body li.on{
+    border: solid 1px #FFFFFF;
+    z-index: 100;
+}

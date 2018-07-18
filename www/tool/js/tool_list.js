@@ -58,7 +58,7 @@ Yee.loader('yee-layer', function () {
                 box_tic.val(ptext);
             }
             var txval = box_val.val();
-            box_val.val(txval + '{@$rs.' + val + '@}');
+            box_val.val(txval + '{$rs.' + val + '}');
         }
     });
 

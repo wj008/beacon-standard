@@ -42,6 +42,11 @@
                 }
                 $(el).find('.plugin-index').text(idx + 1);
             });
+            if(option.maxSize>0 && len>=option.maxSize){
+                $('.plugin-add').hide();
+            }else{
+                $('.plugin-add').show();
+            }
         }
         addbtn.on('click', addItem);
         //删除

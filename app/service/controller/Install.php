@@ -81,6 +81,7 @@ class Install extends Controller
         $ok = true;
         //判断配置文件夹 是否存在可写
         $ok = $this->chkdir('/config', $info) && $ok;
+        $ok = $this->chkdir('/app', $info) && $ok;
         $ok = $this->chkdir('/runtime', $info) && $ok;
         $ok = $this->chkfile('/config/db.config.php', $info) && $ok;
         $html = join('<br>', $info);
@@ -352,7 +353,7 @@ INSERT INTO `@pf_sysmenu` VALUES (\'11\', \'表单模型\', \'1\', \'7\', \'0\',
 INSERT INTO `@pf_sysmenu` VALUES (\'12\', \'列表模型\', \'1\', \'7\', \'0\', \'^/tool/ToolList\', \'3\', \'\', \'\');
 ');
 
-                $db->exec('INSERT INTO `@pf_tool_application` VALUES (\'1\', \'系统后台\', \'app\\admin\', \'admin\');');
+                $db->exec('INSERT INTO `@pf_tool_application` VALUES (\'1\', \'系统后台\', \'app\\\\admin\', \'admin\');');
 
                 unset($vals['is_create']);
                 $code = '<?php return ' . var_export($vals, TRUE) . ';';

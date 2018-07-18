@@ -1,6 +1,6 @@
 Yee.config = {
     version: (function () {
-        return '1.0.1';
+        return '1.0.2';
         //return new Date().getTime();
     }()),
     paths: {
@@ -71,5 +71,6 @@ Yee.config = {
         'yee-datatable': ['vue.min.js', 'css!../css/yee-datatable.css'],
         'yee-plugin': ['base64.min.js', 'yee-layer'],
         'yee-markdown': ['../editormd/editormd.min.js', 'css!../editormd/css/editormd.css'],
+        'yee-txupload': ['yee-layer', '//imgcache.qq.com/open/qcloud/js/vod/sdk/ugcUploader.js'],
     }
 };

@@ -49,8 +49,8 @@
                              </div>
                          </div>
                      </li>
-
-                    <li><a href="http://{#mobile_host#}" target="_blank" class="item" title="新窗口打开首页"><i class="icofont icofont-ui-home"></i></a></li>*}
+*}
+                    {*<li><a href="{#web_host#}" target="_blank" class="item" title="新窗口打开首页"><i class="icofont icofont-ui-home"></i></a></li>*}
                     {* <li><a href="javascript:void(0);" class="item" title="查看全部管理菜单"><i class="icofont icofont-site-map"></i></a></li>*}
                     <li><a href="{url path='~/index/logout'}" class="item" title="安全退出管理中心"><i class="icofont icofont-power"></i></a></li>
                 </ul>

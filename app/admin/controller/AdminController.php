@@ -2,6 +2,13 @@
 
 namespace app\admin\controller;
 
+/**
+ * Created by PhpStorm.
+ * User: wj008
+ * Date: 2018/1/4
+ * Time: 18:37
+ */
+
 
 use beacon\Controller;
 use beacon\DB;
@@ -52,6 +59,7 @@ abstract class AdminController extends Controller
         }
         $this->setSession('adminId', $row['id']);
         $this->setSession('adminName', $row['name']);
+        //Console::log($this->getSession());
         $vals = [];
         if (isset($row['thistime']) && isset($row['lasttime'])) {
             $vals['thistime'] = date('Y-m-d H:i:s');
@@ -68,9 +76,16 @@ abstract class AdminController extends Controller
         exit;
     }
 
-    protected function displayForm(Form $form, $tplname = 'bodyForm.tpl')
+    protected function displayForm(Form $form, string $tplname = '')
     {
         $this->assign('form', $form);
+        if (empty($tplname)) {
+            if (!empty($form->viewTemplate)) {
+                $tplname = $form->viewTemplate;
+            } else {
+                $tplname = 'bodyForm.tpl';
+            }
+        }
         return parent::display($tplname);
     }
 

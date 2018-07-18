@@ -385,7 +385,7 @@ a.form-btn.normal {
     background-repeat: no-repeat
 }
 
-.form-inp.upfile, .form-inp.upimg, .form-inp.qiniu {
+.form-inp.upfile, .form-inp.upimg, .form-inp.qiniu,.form-inp.txupload {
     width: 260px;
     vertical-align: middle;
     border-bottom-left-radius: 0;
@@ -393,7 +393,7 @@ a.form-btn.normal {
     margin-left: -13px
 }
 
-.form-inp.qiniu {
+.form-inp.qiniu,.form-inp.txupload {
     width: 360px;
 }
 
@@ -625,6 +625,7 @@ input.input-valid:focus {
     float: left;
     display: inline-block;
     margin-right: 10px;
+    margin-bottom: 5px;
     padding: 0px;
     position: relative;
 }

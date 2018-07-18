@@ -44,13 +44,17 @@
             textBox.val(qem.data('text') || '');
             button.on('success', function (ev, data) {
                 if (data && data.value && data.text) {
-                    qem.val(data.value);
-                    textBox.val(data.text);
-                    if (typeof textBox.setDefault == 'function') {
-                        textBox.setDefault();
+                    var ret = qem.emit('select', data);
+                    if (ret !== null) {
+                        qem.val(data.value);
+                        textBox.val(data.text);
+                        if (typeof textBox.setDefault == 'function') {
+                            textBox.setDefault();
+                        }
                     }
                 }
             });
+
             if (option.clearBtn) {
                 var clearBtn = $('<a class="form-inp button" href="javascript:;" style="margin-left: 5px">清除</a>').appendTo(span);
                 clearBtn.on('click', function () {
@@ -58,7 +62,9 @@
                     textBox.val('');
                 });
             }
-            Yee.update(span);
+            setTimeout(function () {
+                Yee.update(span);
+            }, 100);
         }
         else if (qem.is('a')) {
             qem.on('click', function () {

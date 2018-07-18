@@ -1,49 +1,41 @@
 (function ($, Yee, layer) {
 
-    var setImgWH = function (img, url, show_maxwidth, show_maxheight) {
 
+    function createImage(url, width, height) {
+        var def = $.Deferred();
         var imgtemp = new Image();
         imgtemp.onload = function () {
-            var width = imgtemp.width;
-            var height = imgtemp.height;
-            if (width > show_maxwidth) {
-                var pt = show_maxwidth / width;//高比宽
-                width = show_maxwidth;
-                height = height * pt;
+            var w = imgtemp.width;
+            var h = imgtemp.height;
+            if (w > width) {
+                var pt = width / w;//高比宽
+                w = width;
+                h = h * pt;
             }
-            if (height > show_maxheight) {
-                var pt = show_maxheight / height;//宽比高
-                height = show_maxheight;
-                width = width * pt;
+            if (h > height) {
+                var pt = height / h;//宽比高
+                h = height;
+                w = w * pt;
             }
-            img.height(Math.round(height));
-            img.width(Math.round(width));
+            var img = $('<img/>');
+            img.height(Math.round(h));
+            img.width(Math.round(w));
             img.attr('src', url);
+            var table = $('<table  border="0" cellspacing="0" cellpadding="0"><tr><td style="padding:0px; vertical-align:middle; text-align:center; overflow: hidden; line-height:0px;"></td></tr></table>');
+            table.width(width);
+            table.height(height);
+            table.find('td').append(img);
+            def.resolve(table);
+        };
+        imgtemp.onerror = function () {
+            def.reject('图片加载失败..');
         };
         imgtemp.src = url;
-    };
-
-    var oldValFunc = $.fn.val;
-    $.fn.val = function (val) {
-        var that = $(this);
-        if (typeof (val) === 'undefined') {
-            return oldValFunc.call(this);
-        } else {
-            var instance = that.getModuleInstance('upimage');
-            if (instance) {
-                if (val != '') {
-                    instance.showImg(val);
-                } else {
-                    instance.hideImg();
-                }
-            }
-            return oldValFunc.call(this, val);
-        }
-    };
+        return def;
+    }
 
     function UpImage(element, options) {
         var qem = $(element);
-
         options = $.extend({
             catSizes: '',
             catType: 0,
@@ -52,6 +44,7 @@
             strictSize: 0,
             button: null
         }, options || {});
+
         if (qem.is('img')) {
             options.btnWidth = qem.width();
             options.btnHeight = qem.height();
@@ -72,29 +65,34 @@
             var button = $('<a class="up_image_btn" href="javascript:;" style="display: inline-block;"></a>').appendTo(btnLayout);
             button.width(options.btnWidth).height(options.btnHeight);
             options.button = button;
-            var table = $('<table  border="0" cellspacing="0" cellpadding="0"><tr><td style="padding:0px; vertical-align:middle; text-align:center; overflow: hidden; line-height:0px;"></td></tr></table>').appendTo(button);
-            table.width(options.btnWidth);
-            table.height(options.btnHeight);
+
             var delBtn = $('<a href="javascript:void(0);"></a>').addClass('up_image_delpic').hide().appendTo(btnLayout);
-            var image = $('<img title="请选择上传图片"/>').appendTo(table.find('td'));
-            var showImg = this.showImg = function (url) {
-                setImgWH(image, url, options.btnWidth, options.btnHeight);
-                table.show();
-                delBtn.show();
+
+            var showImg = function (url) {
+                createImage(url, options.btnWidth, options.btnHeight).then(function (img) {
+                    button.empty().append(img);
+                    delBtn.show();
+                }).fail(function (error) {
+                    console.log(error);
+                });
             }
-            var hideImg = this.hideImg = function (url) {
-                table.hide();
+
+            var hideImg = function (url) {
+                button.empty();
                 delBtn.hide();
             }
+
             delBtn.click(function () {
                 qem.val('');
             });
+
             if (qem.val() == '') {
                 hideImg();
             } else {
                 var val = qem.val();
                 showImg(val);
             }
+
             var bindBox = options.input ? $(options.input) : null;
             qem.on('displayError', function (ev, data) {
                 button.addClass('error');
@@ -107,6 +105,7 @@
                     qem.setDefault();
                 }
             });
+
             qem.on('completeUpload', function (ev, context) {
                 if (!context.status) {
                     if (context.error !== '') {
@@ -164,5 +163,4 @@
     }
 
     Yee.extend('input,img', 'upimage', UpImage);
-
 })(jQuery, Yee, layer);

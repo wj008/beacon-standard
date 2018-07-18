@@ -81,21 +81,35 @@
             }
         };
 
-        qem.on('reset', function () {
+        qem.on('reset', function (ev, item) {
             shower.find('div.yee-upimggroup-item').remove();
+            if (item && $.isArray(item) && item.length > 0) {
+                for (var i = 0, len = item.length; i < len; i++) {
+                    addimg(item[i]);
+                }
+            }
             update();
         });
 
         var addimg = function (info) {
-            var host = options.host || info.host || '';
-            var retUrl = host + (info.url || '');
+            if (size > 0 && shower.find('div.yee-upimggroup-item').length >= size) {
+                return;
+            }
+            var host = options.host || '';
+            var retUrl = '';
+            if (typeof(info) == 'string') {
+                retUrl = host + info || '';
+            } else {
+                host = options.host || info.host || '';
+                retUrl = host + (info.url || '');
+            }
             if (options.showSize) {
                 var retUrl = retUrl.replace(/(\.[a-z]+)$/, function ($0, $1) {
                     return '_' + options.showSize + $1;
                 });
             }
             var img = getImg(retUrl, options.btnWidth, options.btnHeight);
-            var oitem = $('<div class="yee-upimggroup-item"><table  border="0" cellspacing="0" cellpadding="0"><tr><td style="padding:0px; vertical-align:middle; text-align:center; line-height:0px;"></td></tr></table></div>').data('value', info.url);
+            var oitem = $('<div class="yee-upimggroup-item"><table  border="0" cellspacing="0" cellpadding="0"><tr><td style="padding:0px; vertical-align:middle; text-align:center; line-height:0px;"></td></tr></table></div>').data('value', retUrl);
             var table = oitem.find('table');
             var td = oitem.find('td');
             td.append(img);
@@ -119,10 +133,12 @@
                 vals = [];
             }
         }
+
         for (var i = 0; i < vals.length; i++) {
             var item = {url: vals[i]};
             addimg(item);
         }
+
         button.yee_upfile(options);
         button.on('completeUpload', function (ev, context) {
             if (!context.status) {
@@ -131,9 +147,9 @@
                 }
                 return;
             }
-            if (context.list && $.isArray(context.list)) {
-                for (var i = 0; i < context.list.length; i++) {
-                    addimg(context.list[i]);
+            if (context.data && context.data.files && $.isArray(context.data.files)) {
+                for (var i = 0; i < context.data.files.length; i++) {
+                    addimg(context.data.files[i]);
                 }
             } else if (context.data) {
                 addimg(context.data);

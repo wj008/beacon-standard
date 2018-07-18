@@ -16,10 +16,6 @@ use beacon\Route;
 class Index extends AdminController
 {
 
-    public function testAction()
-    {
-        $this->display('t4.tpl');
-    }
 
     public function indexAction()
     {
