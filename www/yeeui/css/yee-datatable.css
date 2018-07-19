@@ -174,6 +174,25 @@
     border-left: none;
 }
 
+.yee-datatable tbody td .yee-intable {
+    width: 100%;
+    padding: 0;
+    border: 0;
+}
+
+.yee-datatable tbody td .yee-intable td {
+    border-top: none;
+    border-bottom: none;
+}
+
+.yee-datatable tbody td .yee-intable tr.first-line {
+    background: #f9f9f9;
+}
+
+.yee-datatable tbody td .yee-intable tr.second-line {
+    border-top: 1px #e6e6e6 dotted;
+}
+
 .yee-datatable tbody td img {
     vertical-align: middle;
     margin: 3px;

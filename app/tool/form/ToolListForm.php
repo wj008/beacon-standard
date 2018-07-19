@@ -111,6 +111,12 @@ class ToolListForm extends Form
                 'plug-mode' => 'composite',
                 'view-tab-index' => 'base',
             ],
+            'useTwoLine' => [
+                'label' => '使用两行',
+                'type' => 'check',
+                'after-text' => '勾选使用两行,会将最后一列拆到下一行',
+                'view-tab-index' => 'base',
+            ],
 
             'orgFields' => [
                 'label' => '其他未修饰字段',

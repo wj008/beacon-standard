@@ -129,7 +129,7 @@ class MakeTemplate
         }
         $this->out[] = '';
         $this->out[] = "{block name='listSearch'}";
-
+        $this->out[] = "{if isset(\$search)}";
         $this->out[] = '{function fn=searchItem box=null}{if $box->prev}{call fn=searchItem box=$box->prev}{/if}';
         $this->out[] = '<label class="form-label">{if isset($box->label[0]) && $box->label[0]!=\'!\'}{$box->label}：{/if}{box field=$box}</label>';
         $this->out[] = '{if $box->next}{call fn=searchItem box=$box->next}{/if}{/function}';
@@ -139,7 +139,6 @@ class MakeTemplate
             $this->out[] = '<div style="text-align: left; float:left;">';
         }
         $this->out[] = '<form id="searchform" yee-module="searchform" data-bind="#list">';
-        $this->out[] = "{if isset(\$search)}";
         $this->out[] = '<div class="form-box">';
         $this->out[] = '{foreach from=$search->getViewFields(\'base\') item=box}';
         $this->out[] = '{call fn=searchItem box=$box}';
@@ -168,7 +167,7 @@ class MakeTemplate
         $this->out[] = '<a class="form-btn normal senior-btn" onclick="$(\'.yeeui-search\').toggleClass(\'senior\')">高级搜索<i></i></a>';
         $this->out[] = '{/if}';
         $this->out[] = '</div>';
-        $this->out[] = '{/if}';
+
         $this->out[] = '</form>';
         if (!empty($code)) {
             $this->out[] = '</div>';
@@ -177,6 +176,7 @@ class MakeTemplate
             $this->out[] = '</div><div class="clear"></div>';
         }
         $this->out[] = '</div>';
+        $this->out[] = '{/if}';
         $this->out[] = "{/block}";
 
     }
@@ -201,7 +201,8 @@ class MakeTemplate
         //表单列表
         if (Utils::isJsonString($this->lrow['fields'])) {
             $fields = json_decode($this->lrow['fields'], true);
-            foreach ($fields as $field) {
+            $len = count($fields);
+            foreach ($fields as $idx => $field) {
                 $thAttr = [];
                 $tdAttr = [];
                 if (!empty($field['orderName'])) {
@@ -213,6 +214,9 @@ class MakeTemplate
                 }
                 if (!empty($field['thWidth'])) {
                     $thAttr[] = 'width="' . $field['thWidth'] . '"';
+                    if ($this->lrow['useTwoLine'] && $idx + 1 != $len) {
+                        $tdAttr[] = 'width="' . $field['thWidth'] . '"';
+                    }
                 }
                 if (!empty($field['thAttrs'])) {
                     $thAttr[] = $field['thAttrs'];
@@ -229,6 +233,9 @@ class MakeTemplate
                         $keyname = $field['keyname'];
                     }
                 }
+                if ($this->lrow['useTwoLine'] && $idx + 1 == $len) {
+                    $tdAttr[] = 'colspan="1000"';
+                }
                 $tdAttr[] = 'v-html="rs.' . $keyname . '"';
                 $thAttr = join(' ', $thAttr);
                 $tdAttr = join(' ', $tdAttr);
@@ -239,6 +246,13 @@ class MakeTemplate
                 $keyname = '_' . $index;
             }
         }
+
+        $sedCode = '';
+        if ($this->lrow['useTwoLine']) {
+            $sedCode = array_pop($tdCode);
+            array_pop($thCode);
+        }
+
         //操作项
         if (!empty($this->lrow['thTitle'])) {
             $field = $this->lrow;
@@ -249,6 +263,9 @@ class MakeTemplate
             }
             if (!empty($field['thWidth'])) {
                 $thAttr[] = 'width="' . $field['thWidth'] . '"';
+                if ($this->lrow['useTwoLine']) {
+                    $tdAttr[] = 'width="' . $field['thWidth'] . '"';
+                }
             }
             if (!empty($field['thAttrs'])) {
                 $thAttr[] = $field['thAttrs'];
@@ -297,9 +314,26 @@ class MakeTemplate
         $this->out[] = '<thead><tr>';
         $this->out[] = join("\n", $thCode);
         $this->out[] = '</tr></thead>';
-        $this->out[] = '<tbody><tr v-for="rs in list">';
-        $this->out[] = join("\n", $tdCode);
-        $this->out[] = '</tr><tr v-if="list.length==0"><td colspan="1000"> 没有任何数据信息....</td></tr></tbody>';
+
+        $this->out[] = '<tbody>';
+        if ($this->lrow['useTwoLine']) {
+            $this->out[] = '<template v-for="rs in list">';
+            $this->out[] = '<tr><td colspan="1000" style="padding: 0;"><table class="yee-intable" cellspacing="0" cellpadding="0" border="0">';
+            $this->out[] = '<tr  class="first-line">';
+            $this->out[] = join("\n", $tdCode);
+            $this->out[] = '</tr>';
+            $this->out[] = '<tr class="second-line">';
+            $this->out[] = $sedCode;
+            $this->out[] = '</tr>';
+            $this->out[] = '</table></td></tr>';
+            $this->out[] = '</template>';
+        } else {
+            $this->out[] = '<tr v-for="rs in list">';
+            $this->out[] = join("\n", $tdCode);
+            $this->out[] = '</tr>';
+        }
+        $this->out[] = '<tr v-if="list.length==0"><td colspan="1000"> 没有任何数据信息....</td></tr>';
+        $this->out[] = '</tbody>';
         $this->out[] = '</table>';
         $this->out[] = "{/block}";
 

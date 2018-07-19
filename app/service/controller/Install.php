@@ -313,6 +313,7 @@ CREATE TABLE `@pf_tool_list` (
   `viewUseTab` tinyint(1) DEFAULT NULL,
   `leftFixed` int(11) DEFAULT NULL,
   `rightFixed` int(11) DEFAULT NULL,
+  `useTwoLine` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
