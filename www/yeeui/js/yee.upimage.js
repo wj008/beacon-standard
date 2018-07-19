@@ -115,6 +115,7 @@
                 }
                 if (qem.is('input')) {
                     qem.val(context.data.url);
+                    showImg(context.data.url);
                 } else {
                     showImg(context.data.url);
                 }
