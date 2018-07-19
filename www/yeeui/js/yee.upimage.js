@@ -77,13 +77,14 @@
                 });
             }
 
-            var hideImg = function (url) {
+            var hideImg = function () {
                 button.empty();
                 delBtn.hide();
             }
 
             delBtn.click(function () {
                 qem.val('');
+                hideImg();
             });
 
             if (qem.val() == '') {
