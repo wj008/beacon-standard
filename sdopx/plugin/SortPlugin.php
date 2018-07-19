@@ -16,9 +16,7 @@ class SortPlugin
 {
     public static function execute(array $param, Outer $out)
     {
-        if (!isset($param['sort'])) {
-            $out->rethrow('没有填写排序值 sort');
-        }
+        $param['sort'] = isset($param['sort']) ? $param['sort'] : 0;
         if (!isset($param['id'])) {
             $out->rethrow('没有填写记录 id');
         }
