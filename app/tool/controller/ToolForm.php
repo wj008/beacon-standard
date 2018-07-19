@@ -67,7 +67,8 @@ class ToolForm extends ToolController
     {
         $form = new ToolFormForm();
         $username = $this->param('key', '');
-        if ($form->getField('key')->remoteFunc($username)) {
+        $remoteFunc = $form->getField('key')->remoteFunc;
+        if ($remoteFunc($username)) {
             $this->success('表单标识可以使用');
         }
         $this->error('表单标识已经存在');
