@@ -54,7 +54,7 @@ class Upfile extends Controller
         }
     }
 
-    //通用上传 兼容xheditor
+    //通用上传
     public function indexAction(Request $request)
     {
         $request->setContentType('json');
@@ -65,8 +65,8 @@ class Upfile extends Controller
         $catSizes = $request->param('catSizes:s', '');
         $strictSize = $request->param('strictSize:s', '');
         //严格要求图片比例
+        $upload = new Uploader('filedata', $config);
         try {
-            $upload = new Uploader('filedata', $config);
             $upload->saveFile();
             if ($upload->getState() != 'SUCCESS') {
                 $this->error($upload->getState());
@@ -120,7 +120,11 @@ class Upfile extends Controller
             }
             $this->success("上传成功", $msg);
         } catch (\Exception $e) {
-            $this->error($e->getMessage());
+            if (defined('DEV_DEBUG') && DEV_DEBUG) {
+                $this->error($e->getMessage());
+            } else {
+                $this->error($upload->getState());
+            }
         }
     }
 
