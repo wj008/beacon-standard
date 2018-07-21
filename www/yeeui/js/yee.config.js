@@ -72,5 +72,6 @@ Yee.config = {
         'yee-plugin': ['base64.min.js', 'yee-layer'],
         'yee-markdown': ['../editormd/editormd.min.js', 'css!../editormd/css/editormd.css'],
         'yee-txupload': ['yee-layer', '//imgcache.qq.com/open/qcloud/js/vod/sdk/ugcUploader.js'],
+        'yee-tinymce': ['../tinymce/tinymce.min.js', '../tinymce/langs/zh_CN.js'],
     }
 };

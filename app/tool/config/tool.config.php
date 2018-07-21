@@ -26,6 +26,7 @@ return [
         ['value' => 'upimggroup', 'text' => '多图片上传 upimggroup', 'data-type' => ['text', 'varchar(300)', 'json']],
         ['value' => 'telephone', 'text' => '电话号码 telephone', 'data-type' => ['varchar(200)']],
         ['value' => 'xheditor', 'text' => 'Xh编辑器 xheditor', 'data-type' => ['text', 'longtext']],
+        ['value' => 'tinymce', 'text' => 'tiny编辑器 tinymce', 'data-type' => ['text', 'longtext']],
         ['value' => 'markdown', 'text' => 'MD编辑器 markdown', 'data-type' => ['text', 'longtext']],
         ['value' => 'select_dialog', 'text' => '选择对话框 select_dialog', 'data-type' => ['int(11)', 'varchar(100)']],
         ['value' => 'multiple', 'text' => '多选对话框 multiple', 'data-type' => ['text', 'varchar(200)', 'json']],
